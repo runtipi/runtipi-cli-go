@@ -1,0 +1,21 @@
+# CLI Build
+/runtipi-cli-go
+
+# CLI Created Files
+/apps
+/data
+/app-data
+/state
+/repos
+/media
+/traefik
+/user-config
+/backups
+/logs
+/docker-compose.yml
+/VERSION
+/.env
+
+# Test Files
+/internal/constants/assets/VERSION
+/.env.local
