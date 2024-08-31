@@ -14,8 +14,8 @@ func init() {
 
 var stopCmd = &cobra.Command{
 	Use: "stop",
-	Short: "Stop runtipi",
-	Long: "Use this command to stop the runtipi docker stack",
+	Short: "Stop Runtipi",
+	Long: "Use this command to stop the Runtipi docker stack",
 	Run: func(cmd *cobra.Command, args []string) {
 		// Stop containers
 		spinner.SetMessage("Stopping containers")

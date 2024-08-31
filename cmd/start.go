@@ -19,8 +19,8 @@ func init() {
 
 var startCmd = &cobra.Command{
 	Use: "start",
-	Short: "Start runtipi",
-	Long: "Use this command to start the runtipi docker stack",
+	Short: "Start Runtipi",
+	Long: "Use this command to start the Runtipi docker stack",
 	Run: func(cmd *cobra.Command, args []string) {
 		// Docker check
 		spinner.SetMessage("Checking user permissions")
