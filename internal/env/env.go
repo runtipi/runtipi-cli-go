@@ -95,13 +95,13 @@ func GenerateEnv() (error) {
 	defaultViper.Set("TIPI_VERSION", version)
 	defaultViper.Set("ROOT_FOLDER_HOST", rootFolder)
 
-	if settings.Port != "" {
+	if settings.Port != nil {
 		defaultViper.Set("NGINX_PORT", settings.Port)
 	} else {
 		defaultViper.Set("NGINX_PORT", 80)
 	}
 
-	if settings.SSLPort != "" {
+	if settings.SSLPort != nil {
 		defaultViper.Set("NGINX_PORT_SSL", settings.SSLPort)
 	} else {
 		defaultViper.Set("NGINX_PORT_SSL", 443)
@@ -151,4 +151,18 @@ func GenerateEnv() (error) {
 
 	defaultViper.WriteConfigAs(envPath)
 	return nil
+}
+
+func GetEnvValue(value string) (string, error) {
+	rootFolder, osErr := os.Getwd()
+	
+	if osErr != nil {
+		return "", osErr
+	}
+
+	viper.SetConfigType("env")
+	viper.SetConfigFile(path.Join(rootFolder, ".env"))
+	viper.ReadInConfig()
+
+	return viper.GetString(value), nil
 }

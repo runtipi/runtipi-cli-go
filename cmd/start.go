@@ -6,6 +6,7 @@ import (
 	"os/exec"
 	"path"
 
+	"github.com/Delta456/box-cli-maker"
 	"github.com/spf13/cobra"
 	"github.com/steveiliop56/runtipi-cli-go/internal/env"
 	"github.com/steveiliop56/runtipi-cli-go/internal/spinner"
@@ -128,5 +129,13 @@ var startCmd = &cobra.Command{
 
 		// Finish
 		spinner.Stop()
+
+		internalIp, _ := env.GetEnvValue("INTERNAL_IP")
+		nginxPort, _ := env.GetEnvValue("NGINX_PORT")
+
+		boxMessage := "Visit http://"  + internalIp + ":" + nginxPort + " to access the dashboard\n\nFind documentation and guides at: https://runtipi.io\n\nTipi is entirely written in TypeScript and we are looking for contributors!"
+
+		Box := box.New(box.Config{Py: 2, Px: 2, Type: "Double", Color: "Green", TitlePos: "Top", ContentAlign: "Center"})
+ 		Box.Print("Runtipi started successfully 🎉", boxMessage)
 	},
 }
