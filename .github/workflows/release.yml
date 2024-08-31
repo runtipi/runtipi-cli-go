@@ -1,0 +1,78 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      runtipi_version:
+        description: Runtipi version to use (v3.6.0, nightly...)
+        required: true
+      cli_version:
+        description: CLI Version to use (v0.1.0, v0.1.1...)
+        required: true
+      prerelease:
+        description: Is this version a prerelease?
+        type: boolean
+        default: false
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create tag
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ github.event.inputs.cli_version }}-runtipi-${{ github.event.inputs.runtipi_version }}
+
+  build-cli:
+    needs: create-tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.22.5"
+
+      - name: Set CLI Version
+        run: echo ${{ github.event.inputs.cli_version }} > internal/constants/assets/CLI_VERSION
+
+      - name: Set Runtipi Version
+        run: echo ${{ github.event.inputs.runtipi_version }} > internal/constants/assets/RUNTIPI_VERSION
+
+      - name: Build CLI for amd64
+        run: GOOS=linux GOARCH=arm64 go build . && mv runtipi-cli-go runtipi-cli-go-arm64
+
+      - name: Build CLI for arm64
+        run: GOOS=linux GOARCH=amd64 go build . && mv runtipi-cli-go runtipi-cli-go-amd64
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: binaries
+          path: |
+            runtipi-cli-go-arm64
+            runtipi-cli-go-amd64
+
+  release:
+    needs: [create-tag, build-cli]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: binaries
+          path: binaries
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          prerelease: ${{ github.event.inputs.prerelease }}
+          tag_name: ${{ github.event.inputs.cli_version }}-runtipi-${{ github.event.inputs.runtipi_version }}
+          name: ${{ github.event.inputs.cli_version }}-runtipi-${{ github.event.inputs.runtipi_version }}
+          files: binaries/*

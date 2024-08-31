@@ -62,7 +62,7 @@ func GenerateEnv(envFile string) (error) {
 		return err
 	}
 
-	version := constants.Version
+	version := constants.RuntipiVersion
 
 	seed, seedErr := system.GetSeed(rootFolder)
 

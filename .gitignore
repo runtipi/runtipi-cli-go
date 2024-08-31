@@ -17,5 +17,6 @@
 /.env
 
 # Test Files
-/internal/constants/assets/VERSION
+/internal/constants/assets/RUNTIPI_VERSION
+/internal/constants/assets/CLI_VERSION
 /.env.local

@@ -17,9 +17,14 @@ var versionCmd = &cobra.Command{
 	Short: "See your Runtipi CLI version",
 	Long: "This command prints the current Runtipi CLI version",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print("Current Runtipi CLI version: ")
+		fmt.Print("Current Runtipi version: ")
 		color.Set(color.FgBlue)
-		fmt.Print(constants.Version)
+		fmt.Print(constants.RuntipiVersion)
+		color.Unset()
+		fmt.Println()
+		fmt.Print("Current CLI version: ")
+		color.Set(color.FgBlue)
+		fmt.Print(constants.CliVersion)
 		color.Unset()
 		fmt.Println()
 	},

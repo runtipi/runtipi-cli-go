@@ -39,7 +39,7 @@ func CopySystemFiles() (error) {
 	}
 
 	os.WriteFile(path.Join(rootFolder, "docker-compose.yml"), []byte(constants.Compose), 0664)
-	os.WriteFile(path.Join(rootFolder, "VERSION"), []byte(constants.Version), 0644)
+	os.WriteFile(path.Join(rootFolder, "VERSION"), []byte(constants.RuntipiVersion), 0644)
 
 	os.Mkdir(path.Join(rootFolder, "apps"), 0755)
 	os.Mkdir(path.Join(rootFolder, "data"), 0755)
