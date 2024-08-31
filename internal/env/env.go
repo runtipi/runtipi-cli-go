@@ -12,14 +12,20 @@ import (
 	"github.com/steveiliop56/runtipi-cli-go/internal/system"
 )
 
-func GenerateEnv() (error) {
+func GenerateEnv(envFile string) (error) {
 	rootFolder, osErr := os.Getwd()
 	
 	if osErr != nil {
 		return osErr
 	}
 
-	envPath := path.Join(rootFolder, ".env")
+	envPath := ""
+
+	if envFile != "" {
+		envPath = envFile
+	} else {
+		envPath = path.Join(rootFolder, ".env")
+	}
 
 	if _, err := os.Stat(envPath); err != nil {
 		os.WriteFile(envPath, []byte(""), 0644)

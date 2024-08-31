@@ -7,6 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var noPermissions bool
+var envFile string
 
 var rootCmd = &cobra.Command{
 	Use:   "runtipi-cli-go",
@@ -21,7 +23,7 @@ func Execute() {
 	}
 }
 
+
 func init() {
 	fmt.Println("Welcome to Runtipi CLI in Go ✨")
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

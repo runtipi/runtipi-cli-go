@@ -1,11 +1,8 @@
 package cmd
 
 import (
-	"fmt"
-	"os/exec"
-
 	"github.com/spf13/cobra"
-	"github.com/steveiliop56/runtipi-cli-go/internal/spinner"
+	"github.com/steveiliop56/runtipi-cli-go/internal/commands"
 )
 
 func init() {
@@ -17,27 +14,6 @@ var stopCmd = &cobra.Command{
 	Short: "Stop Runtipi",
 	Long: "Use this command to stop the Runtipi docker stack",
 	Run: func(cmd *cobra.Command, args []string) {
-		// Stop containers
-		spinner.SetMessage("Stopping containers")
-		spinner.Start()
-
-		_, err := exec.Command("docker", "compose", "down", "--remove-orphans", "--rmi", "local").Output()
-
-		if err != nil {
-			spinner.Fail("Error in stopping containers")
-			spinner.Stop()
-			fmt.Printf("Error: %s\n", err)
-			return
-		}
-
-		containersToRm := []string{"runtipi-reverse-proxy", "runtipi-db", "runtipi-redis", "runtipi", "tipi-db", "tipi-redis", "tipi-reverse-proxy", "tipi-docker-proxy", "tipi-dashboard", "tipi-worker"}
-
-		for _, container := range containersToRm {
-			exec.Command("docker", "stop", container).Output()
-			exec.Command("docker", "rm", container).Output()
-		}
-
-		spinner.Succeed("Runtipi stopped successfully")
-		spinner.Stop()
+		commands.Stop()
 	},
 }
