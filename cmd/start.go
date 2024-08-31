@@ -46,7 +46,7 @@ var startCmd = &cobra.Command{
 		if fileCopyErr != nil {
 			spinner.Fail("Failed to copy system files")
 			spinner.Stop()
-			fmt.Printf("Error: %s", fileCopyErr)
+			fmt.Printf("Error: %s\n", fileCopyErr)
 			return
 		}
 		spinner.Succeed("Copied system files")
@@ -57,7 +57,7 @@ var startCmd = &cobra.Command{
 		if envErr != nil {
 			spinner.Fail("Failed to generate env file")
 			spinner.Stop()
-			fmt.Printf("Error: %s", envErr)
+			fmt.Printf("Error: %s\n", envErr)
 			return
 		}
 		spinner.Succeed("Env file generated")
@@ -68,7 +68,7 @@ var startCmd = &cobra.Command{
 		if filePermErr != nil {
 			spinner.Fail("Failed to chmod files")
 			spinner.Stop()
-			fmt.Printf("Error: %s", filePermErr)
+			fmt.Printf("Error: %s\n", filePermErr)
 			return
 		}
 		spinner.Succeed("File permissions ok")
@@ -81,7 +81,7 @@ var startCmd = &cobra.Command{
 		if rootFolderErr != nil {
 			spinner.Fail("Failed to get root folder")
 			spinner.Stop()
-			fmt.Printf("Error: %s", rootFolderErr)
+			fmt.Printf("Error: %s\n", rootFolderErr)
 			return
 		}
 
@@ -90,7 +90,7 @@ var startCmd = &cobra.Command{
 		if pullError != nil {
 			spinner.Fail("Failed to pull images")
 			spinner.Stop()
-			fmt.Printf("Error: %s", pullError)
+			fmt.Printf("Error: %s\n", pullError)
 			return
 		}
 		spinner.Succeed("Images pulled")
@@ -122,7 +122,7 @@ var startCmd = &cobra.Command{
 		if upErr != nil {
 			spinner.Fail("Failed to start containers")
 			spinner.Stop()
-			fmt.Printf("Error: %s", upErr)
+			fmt.Printf("Error: %s\n", upErr)
 			return
 		}
 		spinner.Succeed("Containers started")
