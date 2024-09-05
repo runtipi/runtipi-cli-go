@@ -17,18 +17,14 @@ jobs:
         with:
           go-version: "1.22.5"
 
+      - name: Install dependencies
+        run: go get .
+
       - name: Set runtipi version
         run: echo development > internal/constants/assets/RUNTIPI_VERSION
 
       - name: Set cli version
         run: echo development > internal/constants/assets/CLI_VERSION
 
-      - name: Debug
-        run: ls -lah /home/runner/work/runtipi-cli-go/runtipi-cli-go
-
       - name: Run tests
         run: go test -v ./internal/...
-
-      - name: Debug after
-        if: always()
-        run: ls -lah /home/runner/work/runtipi-cli-go/runtipi-cli-go
