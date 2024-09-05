@@ -27,4 +27,5 @@ jobs:
         run: echo development > internal/constants/assets/CLI_VERSION
 
       - name: Run tests
+        working-directory: /home/runner/work/runtipi-cli-go/runtipi-cli-go
         run: go test -v ./internal/...
