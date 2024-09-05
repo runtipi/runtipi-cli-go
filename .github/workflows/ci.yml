@@ -28,3 +28,7 @@ jobs:
 
       - name: Run tests
         run: go test -v ./internal/...
+
+      - name: Debug after
+        if: always()
+        run: ls -lah /home/runner/work/runtipi-cli-go/runtipi-cli-go

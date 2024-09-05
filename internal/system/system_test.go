@@ -1,7 +1,6 @@
 package system_test
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 	"path"
@@ -17,7 +16,6 @@ import (
 func init() {
 	// Change back to the root folder
 	os.Chdir("../..")
-	fmt.Println(os.Getwd())
 }
 
 // Test docker check is working
