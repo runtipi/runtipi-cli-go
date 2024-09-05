@@ -21,11 +21,10 @@ jobs:
         run: go get .
 
       - name: Set runtipi version
-        run: echo development > internal/constants/assets/RUNTIPI_VERSION
+        run: echo nightly > internal/constants/assets/RUNTIPI_VERSION
 
       - name: Set cli version
         run: echo development > internal/constants/assets/CLI_VERSION
 
       - name: Run tests
-        working-directory: /home/runner/work/runtipi-cli-go/runtipi-cli-go
-        run: go test -v ./internal/...
+        run: go test -v ./...
