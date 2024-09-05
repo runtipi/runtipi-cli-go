@@ -27,14 +27,19 @@ func TestEnvGen(t *testing.T) {
 	}
 
 	// Get env and settings paths
+	statePath := path.Join(rootFolder, "state")
 	envPath := path.Join(rootFolder, ".env")
-	settingsPath := path.Join(rootFolder, "state", "settings.json")
+	settingsPath := path.Join(statePath, "settings.json")
 	envLocalPath := path.Join(rootFolder, ".env.local")
 
 	// Delete env, env local and settigs files
+	os.Remove(statePath)
 	os.Remove(envPath)
 	os.Remove(settingsPath)
 	os.Remove(envLocalPath)
+
+	// Create state path
+	os.Mkdir(statePath, 0755)
 
 	// Generate env
 	env.GenerateEnv("")
@@ -59,14 +64,19 @@ func TestEnvIsCorrect(t *testing.T) {
 	}
 
 	// Get env and settings paths
+	statePath := path.Join(rootFolder, "state")
 	envPath := path.Join(rootFolder, ".env")
-	settingsPath := path.Join(rootFolder, "state", "settings.json")
+	settingsPath := path.Join(statePath, "settings.json")
 	envLocalPath := path.Join(rootFolder, ".env.local")
 
 	// Delete env, env local and settigs files
+	os.Remove(statePath)
 	os.Remove(envPath)
 	os.Remove(settingsPath)
 	os.Remove(envLocalPath)
+
+	// Create state path
+	os.Mkdir(statePath, 0755)
 
 	// Generate env
 	env.GenerateEnv("")
@@ -159,14 +169,19 @@ func TestLocalEnv(t *testing.T) {
 	}
 
 	// Get env and settings paths
+	statePath := path.Join(rootFolder, "state")
 	envPath := path.Join(rootFolder, ".env")
-	settingsPath := path.Join(rootFolder, "state", "settings.json")
+	settingsPath := path.Join(statePath, "settings.json")
 	envLocalPath := path.Join(rootFolder, ".env.local")
 
 	// Delete env, env local and settigs files
+	os.Remove(statePath)
 	os.Remove(envPath)
 	os.Remove(settingsPath)
 	os.Remove(envLocalPath)
+
+	// Create state path
+	os.Mkdir(statePath, 0755)
 
 	// Set testing version in .env.local
 	os.WriteFile(envLocalPath, []byte("TIPI_VERSION=testing\n"), 0664)
@@ -195,14 +210,18 @@ func TestSettings(t *testing.T) {
 	}
 
 	// Get env and settings paths
+	statePath := path.Join(rootFolder, "state")
 	envPath := path.Join(rootFolder, ".env")
-	settingsPath := path.Join(rootFolder, "state", "settings.json")
+	settingsPath := path.Join(statePath, "settings.json")
 	envLocalPath := path.Join(rootFolder, ".env.local")
 
 	// Delete env, env local and settigs files
+	os.Remove(statePath)
 	os.Remove(envPath)
-	os.Remove(settingsPath)
 	os.Remove(envLocalPath)
+
+	// Create state path
+	os.Mkdir(statePath, 0755)
 
 	// Set custom domain in settings.json
 	os.WriteFile(settingsPath, []byte(`{"domain":"test.com"}`), 0664)

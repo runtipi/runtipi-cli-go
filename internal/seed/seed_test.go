@@ -24,10 +24,14 @@ func TestSeedGen(t *testing.T) {
 	}
 
 	// Define paths
-	seedPath := path.Join(rootFolder, "state", "seed")
+	statePath := path.Join(rootFolder, "state")
+	seedPath := path.Join(statePath, "seed")
 
 	// Remove seed
-	os.Remove(seedPath)
+	os.Remove(statePath)
+
+	// Create path
+	os.Mkdir(statePath, 0755)
 
 	// Generate seed
 	seed.GenerateSeed(rootFolder)

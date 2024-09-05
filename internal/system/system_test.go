@@ -50,10 +50,14 @@ func TestGetSeed(t *testing.T) {
 	}
 
 	// Define paths
-	seedPath := path.Join(rootFolder, "state", "seed")
+	statePath := path.Join(rootFolder, "state")
+	seedPath := path.Join(statePath, "seed")
 
-	// Delete old seed
-	os.Remove(seedPath)
+	// Delete state
+	os.Remove(statePath)
+
+	// Recreate state path
+	os.Mkdir(statePath, 0755)
 
 	// Regenerate seed
 	seed.GenerateSeed(rootFolder)
@@ -102,10 +106,13 @@ func TestDeriveEntopy(t *testing.T) {
 	}
 
 	// Define paths
-	seedPath := path.Join(rootFolder, "state", "seed")
+	statePath := path.Join(rootFolder, "state")
 
 	// Delete old seed
-	os.Remove(seedPath)
+	os.Remove(statePath)
+
+	// Recreate state apth
+	os.Mkdir(statePath, 0755)
 
 	// Regenerate seed
 	seed.GenerateSeed(rootFolder)
