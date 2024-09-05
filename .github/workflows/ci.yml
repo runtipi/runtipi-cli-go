@@ -1,0 +1,27 @@
+name: Runtipi CLI GO CI
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches: "main"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.22.5"
+
+      - name: Set runtipi version
+        run: echo development > internal/constants/RUNTIPI_VERSION
+
+      - name: Set cli version
+        run: echo development > internal/constants/CLI_VERSION
+
+      - name: Run tests
+        run: go test -v ./internal/...
