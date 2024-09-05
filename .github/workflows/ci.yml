@@ -24,7 +24,7 @@ jobs:
         run: echo development > internal/constants/assets/CLI_VERSION
 
       - name: Debug
-        run: ls -lah /home/runner/work/runtipi-cli-go
+        run: ls -lah /home/runner/work/runtipi-cli-go/runtipi-cli-go
 
       - name: Run tests
         run: go test -v ./internal/...
