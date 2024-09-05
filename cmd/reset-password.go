@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"strconv"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -33,7 +34,7 @@ var resetPasswordCmd = &cobra.Command{
 		}
 
 		time := time.Now().Unix()
-		writeErr := os.WriteFile(path.Join(rootFolder, "state", "password-change-request"), []byte(string(time)), 0644)
+		writeErr := os.WriteFile(path.Join(rootFolder, "state", "password-change-request"), []byte(strconv.Itoa(int(time))), 0644)
 
 		if writeErr != nil {
 			spinner.Fail("Failed to create password change request")
