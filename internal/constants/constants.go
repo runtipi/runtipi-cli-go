@@ -10,3 +10,6 @@ var CliVersion string
 
 //go:embed assets/docker-compose.yml
 var Compose string
+
+//go:embed assets/neofetch.txt
+var Neofetch string
