@@ -12,9 +12,18 @@ with some imporevements and new features.
 Why am I building this? Two reasons, firstly I don't like rust and I think its a bad choice for the CLI so I want to build
 something better. Secondly, I just want to learn GO.
 
+### Installation
+
+To install the CLI you need to follow 4 simple steps.
+
+1. Download the latest version matching your system's arch from the [releases](https://github.com/steveiliop56/runtipi-cli-go/releases/) page.
+2. Put the CLI in your `runtipi` folder and rename it to `runtipi-cli-go`.
+3. Make it executable `chmod +x runtipi-cli-go`
+4. Start using it `sudo ./runtipi-cli-go start`
+
 ### Building
 
-Since this is still in early stages of development the only reason to run this is to build it. To build it you need to have go installed and then run these commands:
+To build the CLI you need to have go installed and then run these commands:
 
 Firstly clone the repository:
 
@@ -26,7 +35,7 @@ cd runtipi-cli-go/
 Install packages:
 
 ```bash
-go mod tidy
+go get .
 ```
 
 Build:
@@ -44,3 +53,11 @@ The license is the same as the official Runtipi CLI, so the project is licensed 
 ### Contributing
 
 If you like you can contribute to this project by creating a pull request. Any help is appreciated.
+
+### Acknowledgements
+
+Thank's a lot to:
+
+- [Runtipi CLI](https://github.com/runtipi/cli) because this code is msotly a translation right now
+- [Carbon](https://carbon.sh) for the cool CLI screenshot
+- [Nicolas](https://github.com/meienberger) because well...he made Runtipi.
