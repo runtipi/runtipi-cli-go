@@ -16,7 +16,7 @@ func init() {
 }
 
 var tipiFetchCmd = &cobra.Command{
-	Use: "tipifetch",
+	Use: "neofetch",
 	Short: "Print neofetch using the tipi logo (requires neofetch)",
 	Long: "This command prints print system info using neofetch but with tipi's logo as ascii art (requires neofetch)",
 	Run: func(cmd *cobra.Command, args []string) {
