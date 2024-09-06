@@ -33,3 +33,9 @@ func Fail(message string) {
 	utils.PrintError(message)
 	s.Start()
 }
+
+func PrintUpdate(message string) {
+	s.Stop()
+	utils.PrintUpdate(message)
+	s.Start()
+}

@@ -19,3 +19,10 @@ func PrintSuccess(message string) {
 	color.Unset()
 	fmt.Println(message)
 }
+
+func PrintUpdate(message string) {
+	color.Set(color.FgBlue)
+	fmt.Print("↑ ")
+	color.Unset()
+	fmt.Println(message)
+}
