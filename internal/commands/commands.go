@@ -22,11 +22,11 @@ func Start(envFile string, noPermissions bool) {
 		if dockerErr.Error() == "docker-error" {
 			spinner.Fail("Docker is not installed or user has not the right permissions. See https://docs.docker.com/engine/install/ for more information")
 			spinner.Stop()
-			return
+			os.Exit(1)
 		} else if dockerErr.Error() == "compose-error" {
 			spinner.Fail("Docker compose plugin is not installed. See https://docs.docker.com/compose/install/linux/ for more information")
 			spinner.Stop()
-			return
+			os.Exit(1)
 		}
 	}
 	spinner.Succeed("User permissions are ok")
@@ -38,7 +38,7 @@ func Start(envFile string, noPermissions bool) {
 		spinner.Fail("Failed to copy system files")
 		spinner.Stop()
 		fmt.Printf("Error: %s\n", fileCopyErr)
-		return
+		os.Exit(1)
 	}
 	spinner.Succeed("Copied system files")
 
@@ -49,7 +49,7 @@ func Start(envFile string, noPermissions bool) {
 		spinner.Fail("Failed to generate env file")
 		spinner.Stop()
 		fmt.Printf("Error: %s\n", envErr)
-		return
+		os.Exit(1)
 	}
 	spinner.Succeed("Env file generated")
 
@@ -61,7 +61,7 @@ func Start(envFile string, noPermissions bool) {
 			spinner.Fail("Failed to chmod files")
 			spinner.Stop()
 			fmt.Printf("Error: %s\n", filePermErr)
-			return
+			os.Exit(1)
 		}
 		spinner.Succeed("File permissions ok")
 	}
@@ -75,7 +75,7 @@ func Start(envFile string, noPermissions bool) {
 		spinner.Fail("Failed to get root folder")
 		spinner.Stop()
 		fmt.Printf("Error: %s\n", rootFolderErr)
-		return
+		os.Exit(1)
 	}
 
 	_, pullError := exec.Command("docker", "compose", "--env-file", path.Join(rootFolder, ".env"), "pull").Output()
@@ -84,7 +84,7 @@ func Start(envFile string, noPermissions bool) {
 		spinner.Fail("Failed to pull images")
 		spinner.Stop()
 		fmt.Printf("Error: %s\n", pullError)
-		return
+		os.Exit(1)
 	}
 	spinner.Succeed("Images pulled")
 
@@ -116,7 +116,7 @@ func Start(envFile string, noPermissions bool) {
 		spinner.Fail("Failed to start containers")
 		spinner.Stop()
 		fmt.Printf("Error: %s\n", upErr)
-		return
+		os.Exit(1)
 	}
 	spinner.Succeed("Containers started")
 
@@ -143,7 +143,7 @@ func Stop() {
 		spinner.Fail("Error in stopping containers")
 		spinner.Stop()
 		fmt.Printf("Error: %s\n", err)
-		return
+		os.Exit(1)
 	}
 
 	containersToRm := []string{"runtipi-reverse-proxy", "runtipi-db", "runtipi-redis", "runtipi", "tipi-db", "tipi-redis", "tipi-reverse-proxy", "tipi-docker-proxy", "tipi-dashboard", "tipi-worker"}

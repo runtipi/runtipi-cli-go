@@ -9,6 +9,7 @@ import (
 
 var noPermissions bool
 var envFile string
+var showLogs bool
 
 var rootCmd = &cobra.Command{
 	Use:   "runtipi-cli-go",

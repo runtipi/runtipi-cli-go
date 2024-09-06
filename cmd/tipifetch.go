@@ -6,9 +6,9 @@ import (
 	"os/exec"
 	"path"
 
-	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
+	"github.com/steveiliop56/runtipi-cli-go/internal/utils"
 )
 
 func init() {
@@ -25,11 +25,9 @@ var tipiFetchCmd = &cobra.Command{
 		
 		// Write temp ascii file
 		if err := os.WriteFile(asciiPath, []byte(constants.Neofetch), 0644); err != nil {
-			color.Set(color.FgRed)
-			fmt.Print("✗ ")
-			color.Unset()
-			fmt.Printf("Failed write neofetch ascii art, error: %s\n", err)
-			return
+			utils.PrintError("Failed to write neofetch ascii")
+			fmt.Printf("Error: %s\n", err)
+			os.Exit(1)
 		}
 
 		// Run the neofetch command
@@ -37,20 +35,16 @@ var tipiFetchCmd = &cobra.Command{
 
 		// Check for errors
 		if err != nil {
-			color.Set(color.FgRed)
-			fmt.Print("✗ ")
-			color.Unset()
-			fmt.Printf("Failed to run neofetch command, error: %s\n", err)
-			return
+			utils.PrintError("Failed to run neofetch command")
+			fmt.Printf("Error: %s\n", err)
+			os.Exit(1)
 		}
 
 		// Delete temp file
 		if err := os.Remove(asciiPath); err != nil {
-			color.Set(color.FgRed)
-			fmt.Print("✗ ")
-			color.Unset()
-			fmt.Printf("Failed to remove temp neofetch ascii art, error: %s\n", err)
-			return
+			utils.PrintError("Failed to remove neofetch ascii")
+			fmt.Printf("Error: %s\n", err)
+			os.Exit(1)
 		}
 
 		// Print output

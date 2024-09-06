@@ -1,11 +1,10 @@
 package spinner
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/briandowns/spinner"
-	"github.com/fatih/color"
+	"github.com/steveiliop56/runtipi-cli-go/internal/utils"
 )
 
 var s = spinner.New([]string{"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"}, 50*time.Millisecond)
@@ -25,18 +24,12 @@ func SetMessage(message string) {
 
 func Succeed(message string) {
 	s.Stop()
-	color.Set(color.FgGreen)
-	fmt.Print("✓ ")
-	color.Unset()
-	fmt.Println(message)
+	utils.PrintSuccess(message)
 	s.Start()
 }
 
 func Fail(message string) {
 	s.Stop()
-	color.Set(color.FgRed)
-	fmt.Print("✗ ")
-	color.Unset()
-	fmt.Println(message)
+	utils.PrintError(message)
 	s.Start()
 }

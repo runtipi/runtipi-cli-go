@@ -30,7 +30,7 @@ var resetPasswordCmd = &cobra.Command{
 			spinner.Fail("Failed to get root folder")
 			spinner.Stop()
 			fmt.Printf("Error: %s\n", osErr)
-			return;
+			os.Exit(1)
 		}
 
 		time := time.Now().Unix()
@@ -40,7 +40,7 @@ var resetPasswordCmd = &cobra.Command{
 			spinner.Fail("Failed to create password change request")
 			spinner.Stop()
 			fmt.Printf("Error: %s\n", writeErr)
-			return;
+			os.Exit(1)
 		}
 
 		internalIp, _ := env.GetEnvValue("INTERNAL_IP")
