@@ -8,7 +8,6 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
-	"github.com/steveiliop56/runtipi-cli-go/internal/utils"
 )
 
 func init() {
@@ -25,7 +24,7 @@ var tipiFetchCmd = &cobra.Command{
 		
 		// Write temp ascii file
 		if err := os.WriteFile(asciiPath, []byte(constants.Neofetch), 0644); err != nil {
-			utils.PrintError("Failed to write neofetch ascii")
+			fmt.Printf("%s Failed to write neofetch ascii\n", constants.Red("✗"))
 			fmt.Printf("Error: %s\n", err)
 			os.Exit(1)
 		}
@@ -35,14 +34,14 @@ var tipiFetchCmd = &cobra.Command{
 
 		// Check for errors
 		if err != nil {
-			utils.PrintError("Failed to run neofetch command")
+			fmt.Printf("%s Failed to run neofetch command\n", constants.Red("✗"))
 			fmt.Printf("Error: %s\n", err)
 			os.Exit(1)
 		}
 
 		// Delete temp file
 		if err := os.Remove(asciiPath); err != nil {
-			utils.PrintError("Failed to remove neofetch ascii")
+			fmt.Printf("%s Failed to remove neofetch ascii\n", constants.Red("✗"))
 			fmt.Printf("Error: %s\n", err)
 			os.Exit(1)
 		}

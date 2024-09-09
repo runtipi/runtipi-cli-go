@@ -1,10 +1,11 @@
 package spinner
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/briandowns/spinner"
-	"github.com/steveiliop56/runtipi-cli-go/internal/utils"
+	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
 )
 
 var s = spinner.New([]string{"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"}, 50*time.Millisecond)
@@ -19,23 +20,23 @@ func Stop() {
 }
 
 func SetMessage(message string) {
-	s.Suffix = " " + message
+	s.Suffix = fmt.Sprintf(" %s", message)
 }
 
 func Succeed(message string) {
 	s.Stop()
-	utils.PrintSuccess(message)
+	fmt.Printf("%s %s\n", constants.Green("✓"), message)
 	s.Start()
 }
 
 func Fail(message string) {
 	s.Stop()
-	utils.PrintError(message)
+	fmt.Printf("%s %s\n", constants.Red("✗"), message)
 	s.Start()
 }
 
 func PrintUpdate(message string) {
 	s.Stop()
-	utils.PrintUpdate(message)
+	fmt.Printf("%s %s\n", constants.Blue("↑"), message)
 	s.Start()
 }

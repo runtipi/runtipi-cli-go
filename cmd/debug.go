@@ -13,11 +13,10 @@ import (
 	"syscall"
 
 	"github.com/aquasecurity/table"
-	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
 	"github.com/steveiliop56/runtipi-cli-go/internal/env"
 	"github.com/steveiliop56/runtipi-cli-go/internal/system"
-	"github.com/steveiliop56/runtipi-cli-go/internal/utils"
 )
 
 func init() {
@@ -58,33 +57,28 @@ var debugCmd = &cobra.Command{
 		// Containers
 		containers := []string{"runtipi", "runtipi-db", "runtipi-redis", "runtipi-reverse-proxy"}
 
-		// Colors
-		green := color.New(color.FgGreen).SprintFunc()
-		red := color.New(color.FgRed).SprintFunc()
-		blue := color.New(color.FgBlue).SprintFunc()
-
 		// Root folder
 		rootFolder, rootFolderErr := os.Getwd()
 
 		if rootFolderErr != nil {
-			utils.PrintError("Failed to get root folder")
+			fmt.Printf("%s Failed to get root folder\n", constants.Red("✗"))
 			fmt.Printf("Error: %s\n", rootFolderErr)
 			os.Exit(1)
 		}
 
 		// System Info
-		fmt.Println("\n--- " + blue("System Info") + " ---")
+		fmt.Printf("---- %s ----\n", constants.Blue("System Info"))
 		operatingSystem := runtime.GOOS
 		kernel, kernelErr := exec.Command("uname", "-r").Output()
 		if kernelErr != nil {
-			utils.PrintError("Failed to run uname command")
+			fmt.Printf("%s Failed to run uname command\n", constants.Red("✗"))
 			fmt.Printf("Error: %s\n", kernelErr)
 			os.Exit(1)
 		}
 		sysSchema := syscall.Sysinfo_t{}
 		sysErr := syscall.Sysinfo(&sysSchema)
 		if sysErr != nil {
-			utils.PrintError("Failed to get total memory")
+			fmt.Printf("%s Failed to get total memory\n", constants.Red("✗"))
 			fmt.Printf("Error: %s\n", sysErr)
 			os.Exit(1)
 		}
@@ -97,9 +91,10 @@ var debugCmd = &cobra.Command{
 		sysInfoTable.AddRow("Memory (GB)", totalMemoryGB)
 		sysInfoTable.AddRow("Architecture", arch)
 		sysInfoTable.Render()
+		fmt.Println()
 
 		// User config
-		fmt.Println("\n--- " + blue("User Config") + " ---")
+		fmt.Printf("---- %s ----\n", constants.Blue("User Config"))
 		userConfigTable := table.New(os.Stdout)
 		if _, err := os.Stat(path.Join(rootFolder, "user-config", "tipi-compose.yml")); errors.Is(err, os.ErrNotExist) {
 			userConfigTable.AddRow("Custom tipi docker compose", "false")
@@ -107,26 +102,28 @@ var debugCmd = &cobra.Command{
 			userConfigTable.AddRow("Custom tipi docker compose", "true")
 		}
 		userConfigTable.Render()
+		fmt.Println()
 
 		// Settings
-		fmt.Println("\n--- " + blue("Settings") + " ---")
+		fmt.Printf("---- %s ----\n", constants.Blue("Settings"))
 		settings, settingsErr := os.ReadFile(path.Join(rootFolder, "state", "settings.json"))
 		if settingsErr != nil {
-			utils.PrintError("Failed to read settings file")
+			fmt.Printf("%s Failed to read settings file\n", constants.Red("✗"))
 			fmt.Printf("Error: %s\n", settingsErr)
 			os.Exit(1)
 		}
 		var prettyJson bytes.Buffer
 		prettifyErr := json.Indent(&prettyJson, settings, "", "\t")
 		if prettifyErr != nil {
-			utils.PrintError("Failed to prettify json")
+			fmt.Printf("%s Failed to prettify json\n", constants.Red("✗"))
 			fmt.Printf("Error: %s\n", prettifyErr)
 			os.Exit(1)
 		}
 		fmt.Println(prettyJson.String())
+		fmt.Println()
 
 		// Env
-		fmt.Println("\n--- " + blue("Environment") + " ---")
+		fmt.Printf("---- %s ----\n", constants.Blue("Environment"))
 		envTable := table.New(os.Stdout)
 		envTable.AddRow("POSTGRES_PASSWORD", GetEnvSafeRedact("POSTGRES_PASSWORD"))
 		envTable.AddRow("REDIS_PASSWORD", GetEnvSafeRedact("REDIS_PASSWORD"))
@@ -149,36 +146,38 @@ var debugCmd = &cobra.Command{
 		envTable.AddRow("DEMO_MODE", GetEnvSafe("DEMO_MODE"))
 		envTable.AddRow("LOCAL_DOMAIN", GetEnvSafe("LOCAL_DOMAIN"))
 		envTable.Render()
+		fmt.Println()
 
 		// Containers
-		fmt.Println("\n--- " + blue("Container Status") + " ---")
+		fmt.Printf("---- %s ----\n", constants.Blue("Containers"))
 		containerTable := table.New(os.Stdout)
 		for _, container := range containers {
 			status, err := exec.Command("docker", "ps", "-a", "--filter", "name=" + container, "--format", "{{.Status}}").Output()
 			if err != nil {
-				containerTable.AddRow(container, red("down"))
+				containerTable.AddRow(container, constants.Red("down"))
 			} else {
 				if	strings.Contains(strings.ToLower(string(status)), "up") {
-					containerTable.AddRow(container, green("up"))
+					containerTable.AddRow(container, constants.Green("up"))
 				} else {
-					containerTable.AddRow(container, red("down"))
+					containerTable.AddRow(container, constants.Red("down"))
 				}
 			}
 		}
 		containerTable.Render()
 		fmt.Println("\n^ If a container is not 'Up', you can run the command `docker logs <container_name>` to see the logs of that container.")
-	
+		fmt.Println()
+		
 		// Logs
 		if showLogs {
-			fmt.Println("\n--- " + blue("Container Logs") + " ---")
+			fmt.Printf("---- %s ----", constants.Blue("Container Logs"))
 			for _, container := range containers {
 				logs, err := exec.Command("docker", "logs", "-n", "15", container).Output()
 				if err != nil {
-					utils.PrintError("Failed to get container logs")
+					fmt.Printf("%s Failed to get container logs\n", constants.Red("✗"))
 					fmt.Printf("Error: %s\n", err)
 					os.Exit(1)
 				}
-				fmt.Println("\n" + green(container))
+				fmt.Println("\n" + constants.Green(container))
 				fmt.Printf("\n%s", logs)
 			}
 			fmt.Println("^ Make sure to remove any personal information from the logs.")

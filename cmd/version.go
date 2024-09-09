@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
 )
@@ -17,15 +16,7 @@ var versionCmd = &cobra.Command{
 	Short: "See your Runtipi CLI version",
 	Long: "This command prints the current Runtipi CLI version",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print("Current Runtipi version: ")
-		color.Set(color.FgBlue)
-		fmt.Print(constants.RuntipiVersion)
-		color.Unset()
-		fmt.Println()
-		fmt.Print("Current CLI version: ")
-		color.Set(color.FgBlue)
-		fmt.Print(constants.CliVersion)
-		color.Unset()
-		fmt.Println()
+		fmt.Printf("Current Runtipi version: %s\n", constants.Blue(constants.RuntipiVersion))
+		fmt.Print("Current CLI version: %s\n", constants.Blue(constants.CliVersion))
 	},
 }

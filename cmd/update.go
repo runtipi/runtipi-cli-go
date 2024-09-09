@@ -7,12 +7,11 @@ import (
 	"path"
 
 	"github.com/Delta456/box-cli-maker"
-	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
 	"github.com/steveiliop56/runtipi-cli-go/internal/env"
 	"github.com/steveiliop56/runtipi-cli-go/internal/release"
 	"github.com/steveiliop56/runtipi-cli-go/internal/spinner"
-	"github.com/steveiliop56/runtipi-cli-go/internal/utils"
 )
 
 func init() {
@@ -28,18 +27,15 @@ var updateCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) { 
 		// Checks args
 		if len(args) == 0 {
-			utils.PrintError("Please provide a version to update too, you can use latest, nightly or a specific tag")
+			fmt.Printf("%s Please provide a version to update too, you can use latest, nightly or a specific tag\n", constants.Red("✗"))
 			os.Exit(1)
 		}
-
-		// Define colors
-		blue := color.New(color.FgBlue).SprintFunc()
 
 		// Root folder
 		rootFolder, osErr := os.Getwd()
 	
 		if osErr != nil {
-			utils.PrintError("Faild to get root folder")
+			fmt.Printf("%s Faild to get root folder\n", constants.Red("✗"))
 			fmt.Printf("Error: %s\n", osErr)
 			os.Exit(1)
 		}
@@ -55,12 +51,12 @@ var updateCmd = &cobra.Command{
 		version := args[0]
 		currentVersion, currentVersionErr := env.GetEnvValue("TIPI_VERSION")
 		if currentVersionErr != nil {
-			utils.PrintError("Failed to get current environment version")
+			fmt.Printf("%s Failed to get current environment version\n", constants.Red("✗"))
 			fmt.Printf("Error: %s\n", currentVersionErr)
 			os.Exit(1)
 		}
 
-		spinner.PrintUpdate("Updating from " + blue(currentVersion) + " to " + blue(version))
+		spinner.PrintUpdate(fmt.Sprintf("Updating from %s to %s", constants.Blue(currentVersion), constants.Blue(version)))
 
 		// Validate
 		spinner.SetMessage("Validating version")
@@ -182,7 +178,7 @@ var updateCmd = &cobra.Command{
 		internalIp, _ := env.GetEnvValue("INTERNAL_IP")
 		nginxPort, _ := env.GetEnvValue("NGINX_PORT")
 
-		boxMessage := "Visit http://"  + internalIp + ":" + nginxPort + " to access the dashboard\n\nFind documentation and guides at: https://runtipi.io\n\nTipi is entirely written in TypeScript and we are looking for contributors!"
+		boxMessage := fmt.Sprintf("Visit http://%s:%s to access the dashboard\n\nFind documentation and guides at: https://runtipi.io\n\nTipi is entirely written in TypeScript and we are looking for contributors!", internalIp, nginxPort)
 
 		Box := box.New(box.Config{Py: 2, Px: 2, Type: "Double", Color: "Green", TitlePos: "Top", ContentAlign: "Center"})
 		Box.Print("Runtipi updated successfully 🎉", boxMessage)

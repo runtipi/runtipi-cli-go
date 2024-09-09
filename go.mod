@@ -4,6 +4,7 @@ go 1.22.5
 
 require (
 	github.com/Delta456/box-cli-maker v1.3.2
+	github.com/aquasecurity/table v1.8.0
 	github.com/briandowns/spinner v1.23.1
 	github.com/fatih/color v1.17.0
 	github.com/spf13/cobra v1.8.1
@@ -11,7 +12,6 @@ require (
 )
 
 require (
-	github.com/aquasecurity/table v1.8.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect

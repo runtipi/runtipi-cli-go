@@ -46,7 +46,7 @@ var resetPasswordCmd = &cobra.Command{
 		internalIp, _ := env.GetEnvValue("INTERNAL_IP")
 		nginxPort, _ := env.GetEnvValue("NGINX_PORT")
 
-		message := "Password request created. " + "Head back to http://" + internalIp + ":" + nginxPort + "/reset-password to reset your password."
+		message := fmt.Sprintf("Password request created. Head back to http://%s:%s/reset-password to reset your password.", internalIp, nginxPort)
 
 		spinner.Succeed(message)
 		spinner.Stop()

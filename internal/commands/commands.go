@@ -126,8 +126,8 @@ func Start(envFile string, noPermissions bool) {
 	internalIp, _ := env.GetEnvValue("INTERNAL_IP")
 	nginxPort, _ := env.GetEnvValue("NGINX_PORT")
 
-	boxMessage := "Visit http://"  + internalIp + ":" + nginxPort + " to access the dashboard\n\nFind documentation and guides at: https://runtipi.io\n\nTipi is entirely written in TypeScript and we are looking for contributors!"
+	boxMessage := fmt.Sprintf("Visit http://%s:%s to access the dashboard\n\nFind documentation and guides at: https://runtipi.io\n\nTipi is entirely written in TypeScript and we are looking for contributors!", internalIp, nginxPort)
 
 	Box := box.New(box.Config{Py: 2, Px: 2, Type: "Double", Color: "Green", TitlePos: "Top", ContentAlign: "Center"})
-	 Box.Print("Runtipi started successfully 🎉", boxMessage)
+	Box.Print("Runtipi started successfully 🎉", boxMessage)
 }
