@@ -1,20 +1,19 @@
 package seed
 
 import (
-	"crypto/rand"
-	"encoding/base64"
 	"errors"
 	"os"
 	"path"
+
+	"go.step.sm/crypto/randutil"
 )
 
 func GenerateSeed(rootFolder string) (error) {
 	if _, err := os.Stat(path.Join(rootFolder, "state", "seed")); errors.Is(err, os.ErrNotExist) {
-		b := make([]byte, 32)
-		if _, err := rand.Read(b); err != nil {
-			return err
+		seed, seedErr := randutil.Alphanumeric(32)
+		if seedErr != nil {
+			return seedErr
 		}
-		seed := base64.URLEncoding.EncodeToString(b)[:32]
 		writeErr := os.WriteFile(path.Join(rootFolder, "state", "seed"), []byte(seed), 0644)
 		if writeErr != nil {
 			return writeErr
