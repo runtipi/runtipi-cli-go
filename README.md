@@ -12,6 +12,21 @@ with some imporevements and new features.
 Why am I building this? Two reasons, firstly I don't like rust and I think its a bad choice for the CLI so I want to build
 something better. Secondly, I just want to learn GO.
 
+## Features
+
+Runtipi CLI GO currently has these supported features:
+
+- Start Command
+- Stop Command
+- Restart Command
+- Update Command
+- Version Command
+- Neofetch Command with tipi logo (easter egg)
+- Debug Command
+- Reset Password Command
+- Custom env file location on start, restart and update commands
+- No permissions check mode (rootless mode)
+
 ### Installation
 
 To install the CLI you need to follow 4 simple steps.
