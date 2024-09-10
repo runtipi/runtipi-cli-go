@@ -35,7 +35,7 @@ func Fail(message string) {
 	s.Start()
 }
 
-func PrintUpdate(message string) {
+func Update(message string) {
 	s.Stop()
 	fmt.Printf("%s %s\n", constants.Blue("↑"), message)
 	s.Start()

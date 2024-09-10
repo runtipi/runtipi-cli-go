@@ -7,12 +7,18 @@ import (
 	"path"
 
 	"github.com/Delta456/box-cli-maker"
+	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
 	"github.com/steveiliop56/runtipi-cli-go/internal/env"
 	"github.com/steveiliop56/runtipi-cli-go/internal/spinner"
 	"github.com/steveiliop56/runtipi-cli-go/internal/system"
 )
 
 func Start(envFile string, noPermissions bool) {
+	// Permission Warning
+	if noPermissions {
+		fmt.Printf("%s No permissions mode enabled, you may face issues with Runtipi\n", constants.Yellow("⚠"))
+	}
+	
 	// Docker check
 	spinner.SetMessage("Checking user permissions")
 	spinner.Start()

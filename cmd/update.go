@@ -21,14 +21,14 @@ func init() {
 }
 
 var updateCmd = &cobra.Command{
-	Use: "update",
+	Use: "update [version]",
 	Short: "Update to the latest version",
 	Long: "Use this command to update your runtipi instance to the latest version",
-	Run: func(cmd *cobra.Command, args []string) { 
-		// Checks args
-		if len(args) == 0 {
-			fmt.Printf("%s Please provide a version to update too, you can use latest, nightly or a specific tag\n", constants.Red("✗"))
-			os.Exit(1)
+	Args: cobra.MinimumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		// Permission Warning
+		if noPermissions {
+			fmt.Printf("%s No permissions mode enabled, you may face issues with Runtipi\n", constants.Yellow("⚠"))
 		}
 
 		// Root folder
@@ -56,7 +56,7 @@ var updateCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		spinner.PrintUpdate(fmt.Sprintf("Updating from %s to %s", constants.Blue(currentVersion), constants.Blue(version)))
+		spinner.Update(fmt.Sprintf("Updating from %s to %s", constants.Blue(currentVersion), constants.Blue(version)))
 
 		// Validate
 		spinner.SetMessage("Validating version")
