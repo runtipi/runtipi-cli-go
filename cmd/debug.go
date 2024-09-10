@@ -17,6 +17,7 @@ import (
 	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
 	"github.com/steveiliop56/runtipi-cli-go/internal/env"
 	"github.com/steveiliop56/runtipi-cli-go/internal/system"
+	"github.com/steveiliop56/runtipi-cli-go/internal/utils"
 )
 
 func init() {
@@ -85,7 +86,7 @@ var debugCmd = &cobra.Command{
 		sysInfoTable := table.New(os.Stdout)
 		sysInfoTable.AddRow("OS", operatingSystem)
 		sysInfoTable.AddRow("OS Version", string(kernel[:]))
-		sysInfoTable.AddRow("Memory (GB)", fmt.Sprintf("%.2f", float64(memory.Total)/(1<<30)))
+		sysInfoTable.AddRow("Memory (GB)", utils.FormatFileSize(float64(memory.Total)))
 		sysInfoTable.AddRow("Architecture", arch)
 		sysInfoTable.Render()
 		fmt.Println()

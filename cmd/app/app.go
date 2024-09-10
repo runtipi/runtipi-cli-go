@@ -18,5 +18,6 @@ func AppCmd() *cobra.Command {
 	cmd.AddCommand(subcommands.UpdateAppCmd)
 	cmd.AddCommand(subcommands.UninstallAppCmd)
 	cmd.AddCommand(subcommands.StartAllCmd)
+	cmd.AddCommand(subcommands.ListAppBackupsCmd)
 	return cmd
 }

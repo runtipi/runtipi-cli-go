@@ -55,8 +55,8 @@ var	StatusCmd = &cobra.Command{
 		spinner.Stop()
 
 		// Print status
-		fmt.Printf("Your CPU usage is %s %% \n", constants.Blue(fmt.Sprintf("%.2f", status.Data.CpuLoad)))
-		fmt.Printf("Your Disk size is %s GB, you are using %s GB which is %s %% \n", constants.Blue(status.Data.DiskSize), constants.Blue(status.Data.DiskUsed), constants.Blue(status.Data.PercentUsed))
-		fmt.Printf("Your Memory size is %s GB and you are using %s %%  \n", constants.Blue(status.Data.MemoryTotal), constants.Blue(status.Data.PercentUsedMemory))
+		fmt.Printf("Your CPU usage is %s\n", constants.Blue(fmt.Sprintf("%.2f%%", status.Data.CpuLoad)))
+		fmt.Printf("Your Disk size is %s, you are using %s which is %s\n", constants.Blue(fmt.Sprintf("%dGB", status.Data.DiskSize)), constants.Blue(fmt.Sprintf("%dGB", status.Data.DiskUsed)), constants.Blue(fmt.Sprintf("%0.f%%", status.Data.PercentUsed)))
+		fmt.Printf("Your Memory size is %s and you are using %s\n", constants.Blue(fmt.Sprintf("%dGB", status.Data.MemoryTotal)), constants.Blue(fmt.Sprintf("%0.f%%", status.Data.PercentUsedMemory)))
 	},
 }

@@ -20,15 +20,15 @@ type Settings struct {
 
 type SystemStatus struct {
 	// Disk
-	DiskUsed float64 `json:"diskUsed"`
-	DiskSize float64 `json:"diskSize"`
+	DiskUsed int64 `json:"diskUsed"`
+	DiskSize int64 `json:"diskSize"`
 	PercentUsed float64 `json:"percentUsed"`
 
 	// Cpu
 	CpuLoad float64 `json:"cpuLoad"`
 
 	// Memory
-	MemoryTotal int `json:"memoryTotal"`
+	MemoryTotal int64 `json:"memoryTotal"`
 	PercentUsedMemory float64 `json:"percentUsedMemory"`
 }
 
