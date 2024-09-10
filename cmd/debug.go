@@ -10,9 +10,9 @@ import (
 	"path"
 	"runtime"
 	"strings"
-	"syscall"
 
 	"github.com/aquasecurity/table"
+	"github.com/shirou/gopsutil/v4/mem"
 	"github.com/spf13/cobra"
 	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
 	"github.com/steveiliop56/runtipi-cli-go/internal/env"
@@ -52,7 +52,7 @@ var debugCmd = &cobra.Command{
 	Long: "Use this command to debug your runtipi instance (useful for issues)",
 	Run: func(cmd *cobra.Command, args []string) {
 		// Print warning
-		fmt.Println("\n⚠️  Make sure you have started tipi before running this command")
+		fmt.Print("\n⚠️  Make sure you have started tipi before running this command\n\n")
 
 		// Containers
 		containers := []string{"runtipi", "runtipi-db", "runtipi-redis", "runtipi-reverse-proxy"}
@@ -75,20 +75,17 @@ var debugCmd = &cobra.Command{
 			fmt.Printf("Error: %s\n", kernelErr)
 			os.Exit(1)
 		}
-		sysSchema := syscall.Sysinfo_t{}
-		sysErr := syscall.Sysinfo(&sysSchema)
-		if sysErr != nil {
+		memory, memoryErr := mem.VirtualMemory()
+		if memoryErr != nil {
 			fmt.Printf("%s Failed to get total memory\n", constants.Red("✗"))
-			fmt.Printf("Error: %s\n", sysErr)
+			fmt.Printf("Error: %s\n", memoryErr)
 			os.Exit(1)
 		}
-		totalMemory := uint64(sysSchema.Totalram) * uint64(sysSchema.Unit)
-		totalMemoryGB := fmt.Sprintf("%.2f", float32(totalMemory)/(1<<30))
 		arch := system.GetArch()
 		sysInfoTable := table.New(os.Stdout)
 		sysInfoTable.AddRow("OS", operatingSystem)
 		sysInfoTable.AddRow("OS Version", string(kernel[:]))
-		sysInfoTable.AddRow("Memory (GB)", totalMemoryGB)
+		sysInfoTable.AddRow("Memory (GB)", fmt.Sprintf("%.2f", float64(memory.Total)/(1<<30)))
 		sysInfoTable.AddRow("Architecture", arch)
 		sysInfoTable.Render()
 		fmt.Println()
