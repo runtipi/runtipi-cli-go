@@ -6,6 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/steveiliop56/runtipi-cli-go/cmd/app"
+	"github.com/steveiliop56/runtipi-cli-go/cmd/system"
 )
 
 var noPermissions bool
@@ -29,4 +30,5 @@ func Execute() {
 func init() {
 	fmt.Println("Welcome to Runtipi CLI in Go ✨")
 	rootCmd.AddCommand(app.AppCmd())
+	rootCmd.AddCommand(system.SystemCmd())
 }

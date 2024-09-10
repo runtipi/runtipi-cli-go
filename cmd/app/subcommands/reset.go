@@ -24,7 +24,7 @@ var	ResetAppCmd = &cobra.Command{
 		spinner.Start()
 
 		// Reset app
-		err := api.ApiRequest(path, "POST", 5 * time.Minute)
+		response, err := api.ApiRequest(path, "POST", 5 * time.Minute)
 
 		if err != nil {
 			spinner.Fail("Failed to reset app")
@@ -32,6 +32,8 @@ var	ResetAppCmd = &cobra.Command{
 			fmt.Printf("Error: %s\n", err)
 			os.Exit(1)
 		}
+
+		defer response.Body.Close()
 
 		// Succeed
 		spinner.Succeed("App reset succeessfully")

@@ -24,7 +24,7 @@ var StartAllCmd = &cobra.Command{
 		spinner.Start()
 
 		// Start apps
-		err := api.ApiRequest(path, "POST", 15 * time.Minute)
+		response, err := api.ApiRequest(path, "POST", 15 * time.Minute)
 
 		if err != nil {
 			spinner.Fail("Failed to start apps")
@@ -32,6 +32,8 @@ var StartAllCmd = &cobra.Command{
 			fmt.Printf("Error: %s\n", err)
 			os.Exit(1)
 		}
+
+		defer response.Body.Close()
 
 		// Succeed
 		spinner.Succeed("Apps succeessfully")

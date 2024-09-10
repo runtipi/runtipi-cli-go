@@ -24,7 +24,7 @@ var	UpdateAppCmd = &cobra.Command{
 		spinner.Start()
 
 		// Updating app
-		err := api.ApiRequest(path, "POST", 15 * time.Minute)
+		response, err := api.ApiRequest(path, "POST", 15 * time.Minute)
 
 		if err != nil {
 			spinner.Fail("Failed to update app")
@@ -33,6 +33,8 @@ var	UpdateAppCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
+		defer response.Body.Close()
+		
 		// Succeed
 		spinner.Succeed("App updated succeessfully")
 		spinner.Stop()

@@ -24,7 +24,7 @@ var	RestartAppCmd = &cobra.Command{
 		spinner.Start()
 
 		// Restart app
-		err := api.ApiRequest(path, "POST", 5 * time.Minute)
+		response, err := api.ApiRequest(path, "POST", 5 * time.Minute)
 
 		if err != nil {
 			spinner.Fail("Failed to restart app")
@@ -33,6 +33,8 @@ var	RestartAppCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
+		defer response.Body.Close()
+		
 		// Succeed
 		spinner.Succeed("App restarted succeessfully")
 		spinner.Stop()

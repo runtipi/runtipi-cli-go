@@ -11,13 +11,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/steveiliop56/runtipi-cli-go/internal/schemas"
 	"github.com/steveiliop56/runtipi-cli-go/internal/system"
 )
-
-type GithubRelease struct {
-	TagName string `json:"tag_name"`
-	Status string `json:"status"`
-}
 
 func IsMajorBump(newVersion string, currentVersion string) (bool, error) {
 	newVersionMajor := strings.Split(strings.Replace(newVersion, "v", "", 1), ".")[0]
@@ -53,7 +49,7 @@ func GetLatestVersion() (string, error) {
 
 	defer response.Body.Close()
 
-	release := new(GithubRelease)
+	release := new(schemas.GithubRelease)
 
 	jsonErr := json.NewDecoder(response.Body).Decode(&release)
 
@@ -75,7 +71,7 @@ func ValidateVersion(version string) (bool, error) {
 
 	defer response.Body.Close()
 
-	release := new(GithubRelease)
+	release := new(schemas.GithubRelease)
 
 	jsonErr := json.NewDecoder(response.Body).Decode(&release)
 

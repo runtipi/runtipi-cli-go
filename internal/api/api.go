@@ -30,17 +30,17 @@ func GenerateJWT() (string, error) {
 	return tokenString, nil
 }
 
-func ApiRequest(path string, method string, timeout time.Duration) (error) {
+func ApiRequest(path string, method string, timeout time.Duration) (*http.Response, error) {
 	token, tokenErr := GenerateJWT()
 
 	if tokenErr != nil {
-		return tokenErr
+		return nil, tokenErr
 	}
 
 	port, portErr := env.GetEnvValue("NGINX_PORT")
 
 	if portErr != nil {
-		return portErr
+		return nil, portErr
 	}
 
 	apiUrl := fmt.Sprintf("http://localhost:%s/worker-api/%s", port, path)
@@ -48,7 +48,7 @@ func ApiRequest(path string, method string, timeout time.Duration) (error) {
 	request, requestErr := http.NewRequest(method, apiUrl, bytes.NewBuffer([]byte("")))
 
 	if requestErr != nil {
-		return requestErr
+		return nil, requestErr
 	}
 
 	request.Header.Add("Authorization", fmt.Sprintf("Bearer %s", token))
@@ -60,10 +60,8 @@ func ApiRequest(path string, method string, timeout time.Duration) (error) {
 	response, clientErr := client.Do(request)
 
 	if clientErr != nil {
-		return clientErr
+		return nil, clientErr
 	}
-
-	defer response.Body.Close()
 	
-	return nil
-} 
+	return response, nil
+}
