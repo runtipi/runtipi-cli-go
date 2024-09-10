@@ -1,8 +1,9 @@
-package start
+package subcommands
 
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/steveiliop56/runtipi-cli-go/internal/api"
@@ -23,7 +24,7 @@ var	StartAppCmd = &cobra.Command{
 		spinner.Start()
 
 		// Start app
-		err := api.ApiRequest(path, "POST")
+		err := api.ApiRequest(path, "POST", 5 * time.Minute)
 
 		if err != nil {
 			spinner.Fail("Failed to start app")

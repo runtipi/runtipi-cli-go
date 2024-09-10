@@ -30,7 +30,7 @@ func GenerateJWT() (string, error) {
 	return tokenString, nil
 }
 
-func ApiRequest(path string, method string) (error) {
+func ApiRequest(path string, method string, timeout time.Duration) (error) {
 	token, tokenErr := GenerateJWT()
 
 	if tokenErr != nil {
@@ -54,7 +54,7 @@ func ApiRequest(path string, method string) (error) {
 	request.Header.Add("Authorization", fmt.Sprintf("Bearer %s", token))
 
 	client := &http.Client{
-		Timeout: 5 * time.Minute,
+		Timeout: timeout,
 	}
 
 	response, clientErr := client.Do(request)
