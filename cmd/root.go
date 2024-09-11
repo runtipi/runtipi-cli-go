@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/ivanpirog/coloredcobra"
 	"github.com/spf13/cobra"
 	"github.com/steveiliop56/runtipi-cli-go/cmd/app"
 	"github.com/steveiliop56/runtipi-cli-go/cmd/system"
@@ -20,6 +21,14 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
+	coloredcobra.Init(&coloredcobra.Config{
+        RootCmd:       rootCmd,
+        Headings:      coloredcobra.Yellow + coloredcobra.Bold + coloredcobra.Underline,
+        Commands:      coloredcobra.Red + coloredcobra.Bold,
+        Example:       coloredcobra.Italic,
+        ExecName:      coloredcobra.Bold,
+        Flags:         coloredcobra.Bold,
+    })
 	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
