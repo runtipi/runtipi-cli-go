@@ -14,18 +14,17 @@ something better. Secondly, I just want to learn GO.
 
 ## Features
 
-Runtipi CLI GO currently has these supported features:
+The Runtipi GO CLI has all the official Runtipi CLI features and the following extra ones:
 
-- Start Command
-- Stop Command
-- Restart Command
-- Update Command
-- Version Command
-- Neofetch Command with tipi logo (easter egg)
-- Debug Command
-- Reset Password Command
-- Custom env file location on start, restart and update commands
-- No permissions check mode (rootless mode)
+- List app backups command (`./runtipi-cli app list-backups`)
+- Healthcheck command using the worker API
+- System readings from the worker API
+- Backup command\*
+- List backups command (for runtipi)
+- Neofetch command (easter egg)
+- Automatic backup of the CLI before update
+
+\*I will not add a restore command due to the complexity of explaining users how to use it
 
 ### Installation
 
