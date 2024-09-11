@@ -53,7 +53,7 @@ var debugCmd = &cobra.Command{
 	Long: "Use this command to debug your runtipi instance (useful for issues)",
 	Run: func(cmd *cobra.Command, args []string) {
 		// Print warning
-		fmt.Print("\n⚠️  Make sure you have started tipi before running this command\n\n")
+		fmt.Printf("\n%s Make sure you have started tipi before running this command\n\n", constants.Yellow("⚠"))
 
 		// Containers
 		containers := []string{"runtipi", "runtipi-db", "runtipi-redis", "runtipi-reverse-proxy"}
