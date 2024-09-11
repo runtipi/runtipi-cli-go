@@ -144,3 +144,13 @@ func EnsureFilePermissions() (error) {
 
 	return nil
 }
+
+func EnsureTar() (error) {
+	_, err := exec.Command("tar", "--version").Output()
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

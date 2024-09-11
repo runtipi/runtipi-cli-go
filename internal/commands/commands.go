@@ -137,3 +137,28 @@ func Start(envFile string, noPermissions bool) {
 	Box := box.New(box.Config{Py: 2, Px: 2, Type: "Double", Color: "Green", TitlePos: "Top", ContentAlign: "Center"})
 	Box.Print("Runtipi started successfully 🎉", boxMessage)
 }
+
+func Stop() {
+	// Stop containers
+	spinner.SetMessage("Stopping containers")
+	spinner.Start()
+
+	_, err := exec.Command("docker", "compose", "down", "--remove-orphans", "--rmi", "local").Output()
+
+	if err != nil {
+		spinner.Fail("Error in stopping containers")
+		spinner.Stop()
+		fmt.Printf("Error: %s\n", err)
+		os.Exit(1)
+	}
+
+	containersToRm := []string{"runtipi-reverse-proxy", "runtipi-db", "runtipi-redis", "runtipi", "tipi-db", "tipi-redis", "tipi-reverse-proxy", "tipi-docker-proxy", "tipi-dashboard", "tipi-worker"}
+
+	for _, container := range containersToRm {
+		exec.Command("docker", "stop", container).Output()
+		exec.Command("docker", "rm", container).Output()
+	}
+
+	spinner.Succeed("Runtipi stopped successfully")
+	spinner.Stop()
+}
