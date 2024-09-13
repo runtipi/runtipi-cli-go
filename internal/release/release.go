@@ -141,7 +141,7 @@ func BackupCurrentCLI() (error) {
 	cliPath := path.Join(rootFolder, "runtipi-cli-go")
 	cliBackupPath := path.Join(rootFolder, "runtipi-cli-go.bak")
 
-	_, copyErr := exec.Command("cp", cliPath, cliBackupPath).Output()
+	copyErr := system.Copy(cliPath, cliBackupPath)
 
 	if copyErr != nil {
 		return copyErr

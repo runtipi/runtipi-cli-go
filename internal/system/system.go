@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
+	"io"
 	"net"
 	"os"
 	"os/exec"
@@ -150,6 +151,44 @@ func EnsureTar() (error) {
 
 	if err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func Copy(src string, dest string) (error) {
+	source, sourceErr := os.Open(src)
+
+	if sourceErr != nil {
+		return sourceErr
+	}
+
+	defer source.Close()
+
+	sourceStat, sourceStatErr := source.Stat()
+
+	if sourceStatErr != nil {
+		return sourceStatErr
+	}
+
+	destination, destinationErr := os.Create(dest)
+
+	if destinationErr != nil {
+		return destinationErr
+	}
+
+	defer destination.Close()
+
+	_, copyErr := io.Copy(destination, source)
+
+	if copyErr != nil {
+		return copyErr
+	}
+
+	chmodErr := os.Chmod(dest, sourceStat.Mode())
+
+	if chmodErr != nil {
+		return chmodErr
 	}
 
 	return nil

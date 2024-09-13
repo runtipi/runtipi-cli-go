@@ -7,6 +7,8 @@ import (
 	"path"
 	"path/filepath"
 	"time"
+
+	"github.com/steveiliop56/runtipi-cli-go/internal/system"
 )
 
 func CreateBackup() (string, error) {
@@ -36,7 +38,7 @@ func CreateBackup() (string, error) {
 	}
 
 	// Copy archive to backups folder
-	_, cpErr := exec.Command("cp", tmpArchivePath, archivePath).Output()
+	cpErr := system.Copy(tmpArchivePath, archivePath)
 
 	if cpErr != nil {
 		return "", cpErr

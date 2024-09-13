@@ -21,3 +21,5 @@
 /internal/constants/assets/RUNTIPI_VERSION
 /internal/constants/assets/CLI_VERSION
 /.env.local
+/cpDest.txt
+/cpSrc.txt

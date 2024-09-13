@@ -266,3 +266,60 @@ func TestEnsureFilePermissions(t *testing.T) {
 		}
 	}
 }
+
+// Test copy
+func TestCopy(t *testing.T) {
+	// Get root folder
+	rootFolder, osErr := os.Getwd()
+	
+	if osErr != nil {
+		t.Fatalf("Failed to get root folder, error: %s\n", osErr)
+	}
+
+	// Define paths
+	srcFilePath := path.Join(rootFolder, "cpSrc.txt")
+	destFilePath := path.Join(rootFolder, "cpDest.txt")
+
+	// Delete old files
+	os.Remove(srcFilePath)
+	os.Remove(destFilePath)
+
+	// Create src file
+	writeErr := os.WriteFile(srcFilePath, []byte("test"), 0644)
+
+	// Check for errors
+	if writeErr != nil {
+		t.Fatalf("Failed to write test file, error: %s\n", writeErr)
+	}
+
+	// Copy file
+	cpErr := system.Copy(srcFilePath, destFilePath)
+
+	// Check for errors
+	if cpErr != nil {
+		t.Fatalf("Failed to copy test file, error: %s\n", cpErr)
+	}
+
+	// Check if file got copied
+	destStatus, statErr := os.Stat(destFilePath)
+
+	if statErr != nil {
+		t.Fatalf("Test file doesn't exist, error: %s\n", statErr)
+	}
+
+	// Check if permissions are the same
+	if destStatus.Mode() != os.FileMode(0644) {
+		t.Fatalf("Permissions are not the same! Expected -rw-r--r--, got %s\n", destStatus.Mode().String())
+	}
+
+	// Check contents
+	contents, readErr := os.ReadFile(destFilePath)
+
+	if readErr != nil {
+		t.Fatalf("Failed to read destination file, error: %s\n", readErr)
+	}
+
+	if string(contents) != "test" {
+		t.Fatalf("Contents not the same! Expected test got %s\n", string(contents))
+	}
+}
