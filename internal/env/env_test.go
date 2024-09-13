@@ -187,7 +187,7 @@ func TestLocalEnv(t *testing.T) {
 	os.WriteFile(envLocalPath, []byte("TIPI_VERSION=testing\n"), 0664)
 
 	// Generate env
-	env.GenerateEnv("")
+	env.GenerateEnv(envLocalPath)
 
 	// Read env using viper
 	viper.SetConfigType("env")
