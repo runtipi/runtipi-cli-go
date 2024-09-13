@@ -7,7 +7,7 @@ import (
 
 func init() {
 	restartCmd.Flags().BoolVar(&noPermissions, "no-permissions", false, "Skip setting permissions.")
-	restartCmd.Flags().StringVar(&envFile, "env-file", "", "Path to custom .env file")
+	restartCmd.Flags().StringVar(&envFile, "env-file", "", "Path to custom .env file, it has to be absolute")
 	rootCmd.AddCommand(restartCmd)
 }
 

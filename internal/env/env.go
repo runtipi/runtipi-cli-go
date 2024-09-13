@@ -19,13 +19,7 @@ func GenerateEnv(envFile string) (error) {
 		return osErr
 	}
 
-	envPath := ""
-
-	if envFile != "" {
-		envPath = envFile
-	} else {
-		envPath = path.Join(rootFolder, ".env")
-	}
+	envPath := path.Join(rootFolder, ".env")
 
 	if _, err := os.Stat(envPath); err != nil {
 		os.WriteFile(envPath, []byte(""), 0644)
@@ -143,11 +137,10 @@ func GenerateEnv(envFile string) (error) {
 		defaultViper.Set("LOCAL_DOMAIN", "tipi.local")
 	}
 
-	envLocalPath := path.Join(rootFolder, ".env.local")
-	if _, err := os.Stat(envLocalPath); err == nil {
+	if _, err := os.Stat(envFile); err == nil {
 		customViper := viper.New()
 		customViper.SetConfigType("env")
-		customViper.SetConfigFile(envLocalPath)
+		customViper.SetConfigFile(envFile)
 		customViper.ReadInConfig()
 		overrideKeys := customViper.AllKeys()
 		for _, key := range overrideKeys {

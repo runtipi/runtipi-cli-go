@@ -16,7 +16,7 @@ import (
 
 func init() {
 	updateCmd.Flags().BoolVar(&noPermissions, "no-permissions", false, "Skip setting permissions.")
-	updateCmd.Flags().StringVar(&envFile, "env-file", "", "Path to custom .env file")
+	updateCmd.Flags().StringVar(&envFile, "env-file", "", "Path to custom .env file, it has to be absolute")
 	rootCmd.AddCommand(updateCmd)
 }
 
