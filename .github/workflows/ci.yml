@@ -1,4 +1,4 @@
-name: Runtipi CLI GO CI
+name: Runtipi CLI Go CI
 on:
   pull_request:
   workflow_dispatch:

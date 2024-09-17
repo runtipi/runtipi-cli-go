@@ -1,8 +1,8 @@
-## Runtipi CLI GO
+## Runtipi CLI Go
 
 > Warning ⚠️: This is now under the runtipi organization and it will be maintained by the whole runtipi team.
 
-A reimplementation of the [Runtipi CLI](https://github.com/runtipi/cli) in the GO programming language
+A reimplementation of the [Runtipi CLI](https://github.com/runtipi/cli) in the Go programming language
 with some imporevements and new features.
 
 <img src="screenshots/screenshot.png" width="457" height="296" />
@@ -12,11 +12,11 @@ with some imporevements and new features.
 ### Why?
 
 Why am I building this? Two reasons, firstly I don't like rust and I think its a bad choice for the CLI so I want to build
-something better. Secondly, I just want to learn GO.
+something better. Secondly, I just want to learn Go.
 
 ## Features
 
-The Runtipi GO CLI has all the official Runtipi CLI features and the following extra ones:
+The Runtipi Go CLI has all the official Runtipi CLI features and the following extra ones:
 
 - List app backups command (`./runtipi-cli app list-backups`)
 - Healthcheck command using the worker API
