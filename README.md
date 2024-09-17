@@ -1,5 +1,7 @@
 ## Runtipi CLI GO
 
+> Warning ⚠️: This is now under the runtipi organization and it will be maintained by the whole runtipi team.
+
 A reimplementation of the [Runtipi CLI](https://github.com/runtipi/cli) in the GO programming language
 with some imporevements and new features.
 
