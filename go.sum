@@ -1,5 +1,6 @@
 github.com/Delta456/box-cli-maker v1.3.2 h1:p3LJ67tYrkWOqd3Xju1rYWxx7cRcfHL42poOxdmOLi8=
 github.com/Delta456/box-cli-maker v1.3.2/go.mod h1:MsanLNTlPCfUdYyhfPY4Aond1NbPGnRxJiAWFcDBIsA=
+github.com/Delta456/box-cli-maker/v2 v2.3.0/go.mod h1:Uv/kSX95LuNQn3C8wWazEIETE6MunPuYN+/knckbPQc=
 github.com/aquasecurity/table v1.8.0 h1:9ntpSwrUfjrM6/YviArlx/ZBGd6ix8W+MtojQcM7tv0=
 github.com/aquasecurity/table v1.8.0/go.mod h1:eqOmvjjB7AhXFgFqpJUEE/ietg7RrMSJZXyTN8E/wZw=
 github.com/briandowns/spinner v1.23.1 h1:t5fDPmScwUjozhDj4FA46p5acZWIPXYE30qW2Ptu650=
