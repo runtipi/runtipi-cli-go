@@ -6,12 +6,13 @@ import (
 	"os/exec"
 	"path"
 
+	"runtipi-cli-go/internal/constants"
+	"runtipi-cli-go/internal/env"
+	"runtipi-cli-go/internal/release"
+	"runtipi-cli-go/internal/spinner"
+
 	"github.com/Delta456/box-cli-maker"
 	"github.com/spf13/cobra"
-	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
-	"github.com/steveiliop56/runtipi-cli-go/internal/env"
-	"github.com/steveiliop56/runtipi-cli-go/internal/release"
-	"github.com/steveiliop56/runtipi-cli-go/internal/spinner"
 )
 
 func init() {

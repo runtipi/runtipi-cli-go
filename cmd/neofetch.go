@@ -6,8 +6,9 @@ import (
 	"os/exec"
 	"path"
 
+	"runtipi-cli-go/internal/constants"
+
 	"github.com/spf13/cobra"
-	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
 )
 
 func init() {

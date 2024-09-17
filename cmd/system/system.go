@@ -1,8 +1,9 @@
 package system
 
 import (
+	"runtipi-cli-go/cmd/system/subcommands"
+
 	"github.com/spf13/cobra"
-	"github.com/steveiliop56/runtipi-cli-go/cmd/system/subcommands"
 )
 
 func SystemCmd() *cobra.Command {

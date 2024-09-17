@@ -1,8 +1,9 @@
 package cmd
 
 import (
+	"runtipi-cli-go/internal/commands"
+
 	"github.com/spf13/cobra"
-	"github.com/steveiliop56/runtipi-cli-go/internal/commands"
 )
 
 func init() {

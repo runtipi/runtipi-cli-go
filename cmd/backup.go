@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"os"
 
+	"runtipi-cli-go/internal/backups"
+	"runtipi-cli-go/internal/commands"
+	"runtipi-cli-go/internal/constants"
+	"runtipi-cli-go/internal/spinner"
+	"runtipi-cli-go/internal/system"
+
 	"github.com/spf13/cobra"
-	"github.com/steveiliop56/runtipi-cli-go/internal/backups"
-	"github.com/steveiliop56/runtipi-cli-go/internal/commands"
-	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
-	"github.com/steveiliop56/runtipi-cli-go/internal/spinner"
-	"github.com/steveiliop56/runtipi-cli-go/internal/system"
 )
 
 func init() {

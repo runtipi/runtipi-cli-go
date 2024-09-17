@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"os"
 
+	"runtipi-cli-go/cmd/app"
+	"runtipi-cli-go/cmd/system"
+
 	"github.com/ivanpirog/coloredcobra"
 	"github.com/spf13/cobra"
-	"github.com/steveiliop56/runtipi-cli-go/cmd/app"
-	"github.com/steveiliop56/runtipi-cli-go/cmd/system"
 )
 
 var noPermissions bool

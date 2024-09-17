@@ -11,13 +11,14 @@ import (
 	"runtime"
 	"strings"
 
+	"runtipi-cli-go/internal/constants"
+	"runtipi-cli-go/internal/env"
+	"runtipi-cli-go/internal/system"
+	"runtipi-cli-go/internal/utils"
+
 	"github.com/aquasecurity/table"
 	"github.com/shirou/gopsutil/v4/mem"
 	"github.com/spf13/cobra"
-	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
-	"github.com/steveiliop56/runtipi-cli-go/internal/env"
-	"github.com/steveiliop56/runtipi-cli-go/internal/system"
-	"github.com/steveiliop56/runtipi-cli-go/internal/utils"
 )
 
 func init() {

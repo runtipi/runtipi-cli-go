@@ -6,8 +6,9 @@ import (
 	"net/http"
 	"time"
 
+	"runtipi-cli-go/internal/env"
+
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/steveiliop56/runtipi-cli-go/internal/env"
 )
 
 func GenerateJWT() (string, error) {

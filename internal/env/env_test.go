@@ -7,9 +7,10 @@ import (
 	"strconv"
 	"testing"
 
+	"runtipi-cli-go/internal/constants"
+	"runtipi-cli-go/internal/env"
+
 	"github.com/spf13/viper"
-	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
-	"github.com/steveiliop56/runtipi-cli-go/internal/env"
 )
 
 func init() {

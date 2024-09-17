@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"time"
 
+	"runtipi-cli-go/internal/constants"
+
 	"github.com/briandowns/spinner"
-	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
 )
 
 var s = spinner.New([]string{"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"}, 50*time.Millisecond)

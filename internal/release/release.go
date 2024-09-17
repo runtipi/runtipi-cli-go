@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/steveiliop56/runtipi-cli-go/internal/schemas"
-	"github.com/steveiliop56/runtipi-cli-go/internal/system"
+	"runtipi-cli-go/internal/schemas"
+	"runtipi-cli-go/internal/system"
 )
 
 func IsMajorBump(newVersion string, currentVersion string) (bool, error) {
@@ -39,7 +39,7 @@ func IsMajorBump(newVersion string, currentVersion string) (bool, error) {
 }
 
 func GetLatestVersion() (string, error) {
-	apiUrl := "https://api.github.com/repos/steveiliop56/runtipi-cli-go/releases/latest"
+	apiUrl := "https://api.github.com/repos/runtipi/runtipi-cli-go/releases/latest"
 
 	response, requestErr := http.Get(apiUrl)
 
@@ -61,7 +61,7 @@ func GetLatestVersion() (string, error) {
 }
 
 func ValidateVersion(version string) (bool, error) {
-	apiUrl := "https://api.github.com/repos/steveiliop56/runtipi-cli-go/releases/tags/" + version
+	apiUrl := "https://api.github.com/repos/runtipi/runtipi-cli-go/releases/tags/" + version
 
 	response, requestErr := http.Get(apiUrl)
 
@@ -88,7 +88,7 @@ func ValidateVersion(version string) (bool, error) {
 
 func DownloadLatestCLI(version string) (error) {
 	arch := system.GetArch()
-	assetUrl := fmt.Sprintf("https://github.com/steveiliop56/runtipi-cli-go/releases/download/%s/runtipi-cli-go-%s", version, arch)
+	assetUrl := fmt.Sprintf("https://github.com/runtipi/runtipi-cli-go/releases/download/%s/runtipi-cli-go-%s", version, arch)
 
 	rootFolder, osErr := os.Getwd()
 	

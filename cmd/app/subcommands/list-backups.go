@@ -8,10 +8,11 @@ import (
 	"strings"
 	"time"
 
+	"runtipi-cli-go/internal/constants"
+	"runtipi-cli-go/internal/utils"
+
 	"github.com/aquasecurity/table"
 	"github.com/spf13/cobra"
-	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
-	"github.com/steveiliop56/runtipi-cli-go/internal/utils"
 )
 
 var	ListAppBackupsCmd = &cobra.Command{

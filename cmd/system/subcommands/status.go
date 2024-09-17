@@ -6,11 +6,12 @@ import (
 	"os"
 	"time"
 
+	"runtipi-cli-go/internal/api"
+	"runtipi-cli-go/internal/constants"
+	"runtipi-cli-go/internal/schemas"
+	"runtipi-cli-go/internal/spinner"
+
 	"github.com/spf13/cobra"
-	"github.com/steveiliop56/runtipi-cli-go/internal/api"
-	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
-	"github.com/steveiliop56/runtipi-cli-go/internal/schemas"
-	"github.com/steveiliop56/runtipi-cli-go/internal/spinner"
 )
 
 var	StatusCmd = &cobra.Command{

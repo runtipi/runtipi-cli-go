@@ -13,7 +13,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
+	"runtipi-cli-go/internal/constants"
 )
 
 func EnsureDocker() (error) {

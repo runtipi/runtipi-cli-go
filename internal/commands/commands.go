@@ -6,11 +6,12 @@ import (
 	"os/exec"
 	"path"
 
+	"runtipi-cli-go/internal/constants"
+	"runtipi-cli-go/internal/env"
+	"runtipi-cli-go/internal/spinner"
+	"runtipi-cli-go/internal/system"
+
 	"github.com/Delta456/box-cli-maker"
-	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
-	"github.com/steveiliop56/runtipi-cli-go/internal/env"
-	"github.com/steveiliop56/runtipi-cli-go/internal/spinner"
-	"github.com/steveiliop56/runtipi-cli-go/internal/system"
 )
 
 func Start(envFile string, noPermissions bool) {

@@ -1,8 +1,9 @@
 package app
 
 import (
+	"runtipi-cli-go/cmd/app/subcommands"
+
 	"github.com/spf13/cobra"
-	"github.com/steveiliop56/runtipi-cli-go/cmd/app/subcommands"
 )
 
 func AppCmd() *cobra.Command {

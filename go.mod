@@ -1,4 +1,4 @@
-module github.com/steveiliop56/runtipi-cli-go
+module runtipi-cli-go
 
 go 1.22.5
 

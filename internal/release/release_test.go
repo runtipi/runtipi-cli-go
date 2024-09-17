@@ -6,7 +6,7 @@ import (
 	"path"
 	"testing"
 
-	"github.com/steveiliop56/runtipi-cli-go/internal/release"
+	"runtipi-cli-go/internal/release"
 )
 
 func init() {

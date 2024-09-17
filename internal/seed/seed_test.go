@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/steveiliop56/runtipi-cli-go/internal/seed"
+	"runtipi-cli-go/internal/seed"
 )
 
 func init() {

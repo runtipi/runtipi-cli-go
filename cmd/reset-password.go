@@ -7,9 +7,10 @@ import (
 	"strconv"
 	"time"
 
+	"runtipi-cli-go/internal/env"
+	"runtipi-cli-go/internal/spinner"
+
 	"github.com/spf13/cobra"
-	"github.com/steveiliop56/runtipi-cli-go/internal/env"
-	"github.com/steveiliop56/runtipi-cli-go/internal/spinner"
 )
 
 func init() {

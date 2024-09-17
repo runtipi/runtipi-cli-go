@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/steveiliop56/runtipi-cli-go/internal/seed"
-	"github.com/steveiliop56/runtipi-cli-go/internal/system"
+	"runtipi-cli-go/internal/seed"
+	"runtipi-cli-go/internal/system"
 )
 
 func init() {

@@ -5,11 +5,12 @@ import (
 	"os"
 	"path"
 
+	"runtipi-cli-go/internal/constants"
+	"runtipi-cli-go/internal/schemas"
+	"runtipi-cli-go/internal/seed"
+	"runtipi-cli-go/internal/system"
+
 	"github.com/spf13/viper"
-	"github.com/steveiliop56/runtipi-cli-go/internal/constants"
-	"github.com/steveiliop56/runtipi-cli-go/internal/schemas"
-	"github.com/steveiliop56/runtipi-cli-go/internal/seed"
-	"github.com/steveiliop56/runtipi-cli-go/internal/system"
 )
 
 func GenerateEnv(envFile string) (error) {
