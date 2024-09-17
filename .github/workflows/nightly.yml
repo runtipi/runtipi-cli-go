@@ -1,0 +1,57 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      distinct_id:
+        type: string
+        description: Distinct ID for the release
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Distinct ID
+        run: echo ${{ github.event.inputs.distinct_id }}
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.22.5"
+
+      - name: Set version
+        run: echo nightly > internal/constants/assets/VERSION
+
+      - name: Build CLI for amd64
+        run: GOOS=linux GOARCH=arm64 go build . && mv runtipi-cli-go runtipi-cli-go-arm64
+
+      - name: Build CLI for arm64
+        run: GOOS=linux GOARCH=amd64 go build . && mv runtipi-cli-go runtipi-cli-go-amd64
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: binaries
+          path: |
+            runtipi-cli-go-arm64
+            runtipi-cli-go-amd64
+
+  nightly:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: binaries
+          path: binaries
+
+      - uses: pyTooling/Actions/releaser@r0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: nightly
+          rm: true
+          files: binaries/*

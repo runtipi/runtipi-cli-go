@@ -2,16 +2,14 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      runtipi_version:
+      version:
+        type: string
         description: Runtipi version to use (v3.6.0, nightly...)
         required: true
-      cli_version:
-        description: CLI Version to use (v0.1.0, v0.1.1...)
+      distinct_id:
+        type: string
+        description: Distinct ID for the release
         required: true
-      prerelease:
-        description: Is this version a prerelease?
-        type: boolean
-        default: false
 
 jobs:
   create-tag:
@@ -23,12 +21,15 @@ jobs:
       - name: Create tag
         uses: rickstaa/action-create-tag@v1
         with:
-          tag: ${{ github.event.inputs.cli_version }}-runtipi-${{ github.event.inputs.runtipi_version }}
+          tag: ${{ github.event.inputs.version }}
 
-  build-cli:
+  build:
     needs: create-tag
     runs-on: ubuntu-latest
     steps:
+      - name: Distinct ID
+        run: echo ${{ github.event.inputs.distinct_id }}
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -37,17 +38,14 @@ jobs:
         with:
           go-version: "1.22.5"
 
-      - name: Set CLI Version
-        run: echo ${{ github.event.inputs.cli_version }} > internal/constants/assets/CLI_VERSION
-
-      - name: Set Runtipi Version
-        run: echo ${{ github.event.inputs.runtipi_version }} > internal/constants/assets/RUNTIPI_VERSION
+      - name: Set version
+        run: echo ${{ github.event.inputs.version }} > internal/constants/assets/VERSION
 
       - name: Build CLI for amd64
-        run: GOOS=linux GOARCH=arm64 go build . && mv runtipi-cli-go runtipi-cli-go-arm64
+        run: GOOS=linux GOARCH=arm64 go build -ldflags '-w -s' . && mv runtipi-cli-go runtipi-cli-go-arm64
 
       - name: Build CLI for arm64
-        run: GOOS=linux GOARCH=amd64 go build . && mv runtipi-cli-go runtipi-cli-go-amd64
+        run: GOOS=linux GOARCH=amd64 go build -ldflags '-w -s' . && mv runtipi-cli-go runtipi-cli-go-amd64
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -58,7 +56,7 @@ jobs:
             runtipi-cli-go-amd64
 
   release:
-    needs: [create-tag, build-cli]
+    needs: [create-tag, build]
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
@@ -72,7 +70,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          prerelease: ${{ github.event.inputs.prerelease }}
-          tag_name: ${{ github.event.inputs.cli_version }}-runtipi-${{ github.event.inputs.runtipi_version }}
-          name: ${{ github.event.inputs.cli_version }}-runtipi-${{ github.event.inputs.runtipi_version }}
+          prerelease: false
+          tag_name: ${{ github.event.inputs.version }}
+          name: ${{ github.event.inputs.version }}
           files: binaries/*

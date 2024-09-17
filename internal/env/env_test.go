@@ -155,8 +155,8 @@ func TestEnvIsCorrect(t *testing.T) {
 
 	// Check version
 	version := viper.GetString("TIPI_VERSION")
-	if version != constants.RuntipiVersion {
-		t.Fatalf("Tipi version should be %s, got %s\n", constants.RuntipiVersion, version)
+	if version != constants.Version {
+		t.Fatalf("Tipi version should be %s, got %s\n", constants.Version, version)
 	}
 }
 
