@@ -20,11 +20,8 @@ jobs:
       - name: Install dependencies
         run: go get .
 
-      - name: Set runtipi version
-        run: echo -n nightly > internal/constants/assets/RUNTIPI_VERSION
-
-      - name: Set cli version
-        run: echo -n development > internal/constants/assets/CLI_VERSION
+      - name: Set version
+        run: echo -n nightly > internal/constants/assets/VERSION
 
       - name: Run tests
         run: go test -v ./...
