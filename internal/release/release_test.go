@@ -46,7 +46,7 @@ func TestMajorValidator(t *testing.T) {
 // Test validate version
 func TestValidateVersion(t *testing.T) {
 	// Try correct version
-	validateCheckCorrect, validateCheckCorrectErr := release.ValidateVersion("v3.6.0")
+	validateCheckCorrect, validateCheckCorrectErr := release.ValidateVersion("nightly")
 
 	// Check for errors
 	if validateCheckCorrectErr != nil {
