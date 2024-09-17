@@ -137,7 +137,7 @@ var updateCmd = &cobra.Command{
 		// Download latest CLI
 		spinner.SetMessage("Downloading latest CLI")
 
-		downloadErr := release.DownloadLatestCLI(versionToUpdate)
+		downloadErr := release.DownloadCLI(versionToUpdate)
 
 		if downloadErr != nil {
 			spinner.Fail("Failed to download latest CLI, please copy the runtipi-cli-go.bak file to runtipi-cli-go and try again")

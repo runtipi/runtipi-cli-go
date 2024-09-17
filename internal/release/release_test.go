@@ -46,7 +46,7 @@ func TestMajorValidator(t *testing.T) {
 // Test validate version
 func TestValidateVersion(t *testing.T) {
 	// Try correct version
-	validateCheckCorrect, validateCheckCorrectErr := release.ValidateVersion("v0.1.0-alpha.1-runtipi-v3.6.0")
+	validateCheckCorrect, validateCheckCorrectErr := release.ValidateVersion("v3.6.0")
 
 	// Check for errors
 	if validateCheckCorrectErr != nil {
@@ -59,7 +59,7 @@ func TestValidateVersion(t *testing.T) {
 	}
 
 	// Try wrong version
-	validateCheckWrong, validateCheckWrongErr := release.ValidateVersion("v0.1.0-alpha.1-runtipi-v3.5.8")
+	validateCheckWrong, validateCheckWrongErr := release.ValidateVersion("v3.5.8")
 
 	// Check for errors
 	if validateCheckWrongErr != nil {
@@ -88,7 +88,7 @@ func TestCLIDownload(t *testing.T) {
 	os.Remove(cliPath)
 
 	// Download new CLI
-	downloadErr := release.DownloadLatestCLI("v0.1.0-alpha.1-runtipi-v3.6.0")
+	downloadErr := release.DownloadCLI("v3.6.0")
 
 	// Check for errors
 	if downloadErr != nil {

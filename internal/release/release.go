@@ -86,7 +86,7 @@ func ValidateVersion(version string) (bool, error) {
 	return true, nil
 }
 
-func DownloadLatestCLI(version string) (error) {
+func DownloadCLI(version string) (error) {
 	arch := system.GetArch()
 	assetUrl := fmt.Sprintf("https://github.com/runtipi/runtipi-cli-go/releases/download/%s/runtipi-cli-go-%s", version, arch)
 
