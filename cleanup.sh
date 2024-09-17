@@ -22,4 +22,5 @@ rm -rf .env
 # Test Files
 # /internal/constants/assets/RUNTIPI_VERSION
 # /internal/constants/assets/CLI_VERSION
+# /internal/constants/assets/VERSION
 # /.env.local
