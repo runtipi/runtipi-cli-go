@@ -7,8 +7,7 @@ with some imporevements and new features.
 
 > Warning ⚠️: This project is built and maintained by volunteers. There is no guarantee of support or security when you use it. While the system is considered stable, it is still in active development and may contain bugs.
 
-> Info ℹ️: Runtipi CLI Go is written in 100% Go, if you would like to help check out the issues section or our Discord server!
-> 
+> Info 🗒️: Runtipi CLI Go is written in 100% Go, if you would like to help check out the issues section or our Discord server!
 
 ### Why?
 
