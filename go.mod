@@ -4,10 +4,12 @@ go 1.22.5
 
 require (
 	github.com/Delta456/box-cli-maker v1.3.2
+	github.com/Delta456/box-cli-maker/v2 v2.3.0
 	github.com/aquasecurity/table v1.8.0
 	github.com/briandowns/spinner v1.23.1
 	github.com/fatih/color v1.17.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
+	github.com/ivanpirog/coloredcobra v1.0.1
 	github.com/shirou/gopsutil/v4 v4.24.8
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
@@ -19,7 +21,6 @@ require (
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
-	github.com/ivanpirog/coloredcobra v1.0.1 // indirect
 	github.com/lufia/plan9stats v0.0.0-20211012122336-39d0f177ccd0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
