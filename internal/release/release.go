@@ -6,7 +6,6 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"os/exec"
 	"path"
 	"strconv"
 	"strings"
@@ -122,7 +121,7 @@ func DownloadCLI(version string) (error) {
 		return writeErr
 	}
 
-	_, chmodErr := exec.Command("chmod", "+x", cliPath).Output()
+	chmodErr := os.Chmod(cliPath, 0755)
 
 	if chmodErr != nil {
 		return chmodErr

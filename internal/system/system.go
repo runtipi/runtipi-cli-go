@@ -121,24 +121,24 @@ func EnsureFilePermissions() (error) {
 
 	for _, item := range items {
 		if slices.Contains(SevenSevenSevenItems, item.Name()) {
-			_, execErr := exec.Command("chmod", "-R", "777", item.Name()).Output()
-			if execErr != nil {
-				return execErr
+			chmodErr := os.Chmod(item.Name(), 0777)
+			if chmodErr != nil {
+				return chmodErr
 			}
 		} else if slices.Contains(SixSixSixItems, item.Name()) {
-			_, execErr := exec.Command("chmod", "-R", "666", item.Name()).Output()
-			if execErr != nil {
-				return execErr
+			chmodErr := os.Chmod(item.Name(), 0666)
+			if chmodErr != nil {
+				return chmodErr
 			}
 		} else if slices.Contains(SixSixFourItems, item.Name()) {
-			_, execErr := exec.Command("chmod", "-R", "664", item.Name()).Output()
-			if execErr != nil {
-				return execErr
+			chmodErr := os.Chmod(item.Name(), 0664)
+			if chmodErr != nil {
+				return chmodErr
 			}
 		} else if slices.Contains(SixOOItems, item.Name()) {
-			_, execErr := exec.Command("chmod", "-R", "600", item.Name()).Output()
-			if execErr != nil {
-				return execErr
+			chmodErr := os.Chmod(item.Name(), 0600)
+			if chmodErr != nil {
+				return chmodErr
 			}
 		}
 	}
