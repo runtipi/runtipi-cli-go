@@ -10,7 +10,6 @@ import (
 	"os/exec"
 	"path"
 	"runtime"
-	"slices"
 	"strings"
 
 	"runtipi-cli-go/internal/constants"
@@ -42,16 +41,11 @@ func CopySystemFiles() (error) {
 	os.WriteFile(path.Join(rootFolder, "docker-compose.yml"), []byte(constants.Compose), 0664)
 	os.WriteFile(path.Join(rootFolder, "VERSION"), []byte(constants.Version), 0644)
 
-	os.Mkdir(path.Join(rootFolder, "apps"), 0755)
-	os.Mkdir(path.Join(rootFolder, "data"), 0755)
-	os.Mkdir(path.Join(rootFolder, "app-data"), 0755)
-	os.Mkdir(path.Join(rootFolder, "state"), 0755)
-	os.Mkdir(path.Join(rootFolder, "repos"), 0755)
-	os.Mkdir(path.Join(rootFolder, "media"), 0755)
-	os.Mkdir(path.Join(rootFolder, "traefik"), 0755)
-	os.Mkdir(path.Join(rootFolder, "user-config"), 0755)
-	os.Mkdir(path.Join(rootFolder, "backups"), 0755)
-	os.Mkdir(path.Join(rootFolder, "logs"), 0755)
+	dirs := []string{"state", "data", "apps", "app-data", "repos", "media", "traefik", "user-config", "backups", "logs"}
+
+	for _, dir := range dirs {
+		os.Mkdir(path.Join(rootFolder, dir), 0755)
+	}
 
 	return nil
 }
@@ -108,36 +102,16 @@ func EnsureFilePermissions() (error) {
 		return err
 	}
 
-	SevenSevenSevenItems := []string{"state", "data", "apps", "logs", "traefik", "repos", "user-config", "state"}
-	SixSixSixItems := []string{"state/settings.json"}
-	SixSixFourItems := []string{".env", "docker-compose.yml", "VERSION"}
-	SixOOItems := []string{"traefik/shared/acme.json", "state/seed"}
-	
-	items, itemsErr := os.ReadDir(rootFolder)
-
-	if itemsErr != nil {
-		return itemsErr
+	filePerms := map[os.FileMode][]string{
+		0777: {"state", "data", "apps", "logs", "traefik", "repos", "user-config"},
+		0666: {"state/settings.json"},	
+		0664: {".env", "docker-compose.yml", "VERSION"},
+		0600: {"traefik/shared/acme.json", "state/seed"},
 	}
 
-	for _, item := range items {
-		if slices.Contains(SevenSevenSevenItems, item.Name()) {
-			chmodErr := os.Chmod(item.Name(), 0777)
-			if chmodErr != nil {
-				return chmodErr
-			}
-		} else if slices.Contains(SixSixSixItems, item.Name()) {
-			chmodErr := os.Chmod(item.Name(), 0666)
-			if chmodErr != nil {
-				return chmodErr
-			}
-		} else if slices.Contains(SixSixFourItems, item.Name()) {
-			chmodErr := os.Chmod(item.Name(), 0664)
-			if chmodErr != nil {
-				return chmodErr
-			}
-		} else if slices.Contains(SixOOItems, item.Name()) {
-			chmodErr := os.Chmod(item.Name(), 0600)
-			if chmodErr != nil {
+	for permission, item := range filePerms {
+		for _, file := range item {
+			if chmodErr := os.Chmod(path.Join(rootFolder, file), permission); chmodErr != nil {
 				return chmodErr
 			}
 		}

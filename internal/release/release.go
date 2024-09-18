@@ -97,7 +97,7 @@ func DownloadCLI(version string) (error) {
 
 	cliPath := path.Join(rootFolder, "runtipi-cli-go")
 
-	os.Remove(cliPath)
+	os.RemoveAll(cliPath)
 
 	create, createErr := os.Create(cliPath)
 

@@ -34,10 +34,10 @@ func TestEnvGen(t *testing.T) {
 	envLocalPath := path.Join(rootFolder, ".env.local")
 
 	// Delete env, env local and settigs files
-	os.Remove(statePath)
-	os.Remove(envPath)
-	os.Remove(settingsPath)
-	os.Remove(envLocalPath)
+	os.RemoveAll(statePath)
+	os.RemoveAll(envPath)
+	os.RemoveAll(settingsPath)
+	os.RemoveAll(envLocalPath)
 
 	// Create state path
 	os.Mkdir(statePath, 0755)
@@ -71,10 +71,10 @@ func TestEnvIsCorrect(t *testing.T) {
 	envLocalPath := path.Join(rootFolder, ".env.local")
 
 	// Delete env, env local and settigs files
-	os.Remove(statePath)
-	os.Remove(envPath)
-	os.Remove(settingsPath)
-	os.Remove(envLocalPath)
+	os.RemoveAll(statePath)
+	os.RemoveAll(envPath)
+	os.RemoveAll(settingsPath)
+	os.RemoveAll(envLocalPath)
 
 	// Create state path
 	os.Mkdir(statePath, 0755)
@@ -176,10 +176,10 @@ func TestLocalEnv(t *testing.T) {
 	envLocalPath := path.Join(rootFolder, ".env.local")
 
 	// Delete env, env local and settigs files
-	os.Remove(statePath)
-	os.Remove(envPath)
-	os.Remove(settingsPath)
-	os.Remove(envLocalPath)
+	os.RemoveAll(statePath)
+	os.RemoveAll(envPath)
+	os.RemoveAll(settingsPath)
+	os.RemoveAll(envLocalPath)
 
 	// Create state path
 	os.Mkdir(statePath, 0755)
@@ -217,9 +217,9 @@ func TestSettings(t *testing.T) {
 	envLocalPath := path.Join(rootFolder, ".env.local")
 
 	// Delete env, env local and settigs files
-	os.Remove(statePath)
-	os.Remove(envPath)
-	os.Remove(envLocalPath)
+	os.RemoveAll(statePath)
+	os.RemoveAll(envPath)
+	os.RemoveAll(envLocalPath)
 
 	// Create state path
 	os.Mkdir(statePath, 0755)

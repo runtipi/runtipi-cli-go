@@ -28,7 +28,7 @@ func TestSeedGen(t *testing.T) {
 	seedPath := path.Join(statePath, "seed")
 
 	// Remove seed
-	os.Remove(statePath)
+	os.RemoveAll(statePath)
 
 	// Create path
 	os.Mkdir(statePath, 0755)

@@ -41,7 +41,7 @@ var tipiFetchCmd = &cobra.Command{
 		}
 
 		// Delete temp file
-		if err := os.Remove(asciiPath); err != nil {
+		if err := os.RemoveAll(asciiPath); err != nil {
 			fmt.Printf("%s Failed to remove neofetch ascii\n", constants.Red("✗"))
 			fmt.Printf("Error: %s\n", err)
 			os.Exit(1)

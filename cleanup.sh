@@ -24,3 +24,5 @@ rm -rf .env
 # /internal/constants/assets/CLI_VERSION
 # /internal/constants/assets/VERSION
 # /.env.local
+rm -rf cpSrc.txt
+rm -rf cpDest.txt

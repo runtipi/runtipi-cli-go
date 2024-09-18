@@ -85,7 +85,7 @@ func TestCLIDownload(t *testing.T) {
 	cliPath := path.Join(rootFolder, "runtipi-cli-go")
 
 	// Delete old CLI
-	os.Remove(cliPath)
+	os.RemoveAll(cliPath)
 
 	// Download new CLI
 	downloadErr := release.DownloadCLI("v3.6.0")
@@ -115,8 +115,8 @@ func TestBackupCLI(t *testing.T) {
 	cliBackupPath := path.Join(rootFolder, "runtipi-cli-go")
 
 	// Delete old files
-	os.Remove(cliPath)
-	os.Remove(cliBackupPath)
+	os.RemoveAll(cliPath)
+	os.RemoveAll(cliBackupPath)
 
 	// Create empty CLI file
 	os.Create(cliPath)

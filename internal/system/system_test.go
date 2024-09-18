@@ -1,11 +1,11 @@
 package system_test
 
 import (
+	"errors"
 	"os"
 	"os/exec"
 	"path"
 	"runtime"
-	"slices"
 	"strconv"
 	"testing"
 
@@ -54,7 +54,7 @@ func TestGetSeed(t *testing.T) {
 	seedPath := path.Join(statePath, "seed")
 
 	// Delete state
-	os.Remove(statePath)
+	os.RemoveAll(statePath)
 
 	// Recreate state path
 	os.Mkdir(statePath, 0755)
@@ -109,7 +109,7 @@ func TestDeriveEntopy(t *testing.T) {
 	statePath := path.Join(rootFolder, "state")
 
 	// Delete old seed
-	os.Remove(statePath)
+	os.RemoveAll(statePath)
 
 	// Recreate state apth
 	os.Mkdir(statePath, 0755)
@@ -137,79 +137,39 @@ func TestDeriveEntopy(t *testing.T) {
 func TestCopySystemFiles(t *testing.T) {
 	// Get root folder
 	rootFolder, osErr := os.Getwd()
-	
 	if osErr != nil {
 		t.Fatalf("Failed to get root folder, error: %s\n", osErr)
 	}
 
 	// Define paths
-	composePath := path.Join(rootFolder, "docker-compose.yml")
-	versionPath := path.Join(rootFolder, "VERSION")
-
-	appsPath := path.Join(rootFolder, "apps")
-	dataPath := path.Join(rootFolder, "data")
-	appDataPath := path.Join(rootFolder, "app-data")
-	statePath := path.Join(rootFolder, "state")
-	reposPath := path.Join(rootFolder, "repos")
-	mediaPath := path.Join(rootFolder, "media")
-	traefikPath := path.Join(rootFolder, "traefik")
-	userConfigPath := path.Join(rootFolder, "user-config")
-	backupsPath := path.Join(rootFolder, "backups")
-	logsPath := path.Join(rootFolder, "logs")
+	paths := []string{
+		"docker-compose.yml",
+		"VERSION",
+		"apps",
+		"data",
+		"app-data",
+		"state",
+		"repos",
+		"media",
+		"traefik",
+		"user-config",
+		"backups",
+		"logs",
+	}
 
 	// Delete everything
-	os.Remove(composePath)
-	os.Remove(versionPath)
-	os.Remove(appsPath)
-	os.Remove(dataPath)
-	os.Remove(appDataPath)
-	os.Remove(statePath)
-	os.Remove(reposPath)
-	os.Remove(mediaPath)
-	os.Remove(traefikPath)
-	os.Remove(userConfigPath)
-	os.Remove(backupsPath)
-	os.ReadDir(logsPath)
+	for _, p := range paths {
+		os.RemoveAll(path.Join(rootFolder, p))
+	}
 
 	// Generate files
 	system.CopySystemFiles()
 
 	// Check if files got generated
-	if _, err := os.Stat(composePath); err != nil {
-		t.Fatal("Cannot find compose file")
-	}
-	if _, err := os.Stat(versionPath); err != nil {
-		t.Fatal("Cannot find version file")
-	}
-	if _, err := os.Stat(appsPath); err != nil {
-		t.Fatal("Cannot find apps folder")
-	}
-	if _, err := os.Stat(dataPath); err != nil {
-		t.Fatal("Cannot find data folder")
-	}
-	if _, err := os.Stat(appDataPath); err != nil {
-		t.Fatal("Cannot find app-data folder")
-	}
-	if _, err := os.Stat(statePath); err != nil {
-		t.Fatal("Cannot find state folder")
-	}
-	if _, err := os.Stat(reposPath); err != nil {
-		t.Fatal("Cannot find repos folder")
-	}
-	if _, err := os.Stat(mediaPath); err != nil {
-		t.Fatal("Cannot find media folder")
-	}
-	if _, err := os.Stat(traefikPath); err != nil {
-		t.Fatal("Cannot find traefik folder")
-	}
-	if _, err := os.Stat(userConfigPath); err != nil {
-		t.Fatal("Cannot find user-config folder")
-	}
-	if _, err := os.Stat(backupsPath); err != nil {
-		t.Fatal("Cannot find backups folder")
-	}
-	if _, err := os.Stat(logsPath); err != nil {
-		t.Fatal("Cannot find log folder")
+	for _, p := range paths {
+		if _, err := os.Stat(path.Join(rootFolder, p)); err != nil {
+			t.Fatalf("Cannot find %s", p)
+		}
 	}
 }
 
@@ -217,7 +177,6 @@ func TestCopySystemFiles(t *testing.T) {
 func TestEnsureFilePermissions(t *testing.T) {
 	// Get root folder
 	rootFolder, osErr := os.Getwd()
-	
 	if osErr != nil {
 		t.Fatalf("Failed to get root folder, error: %s\n", osErr)
 	}
@@ -225,44 +184,59 @@ func TestEnsureFilePermissions(t *testing.T) {
 	// Generate system files
 	system.CopySystemFiles()
 
-	// Define files and folders permissions
-	SevenSevenSevenItems := []string{"state", "data", "apps", "logs", "traefik", "repos", "user-config", "state"}
-	SixSixSixItems := []string{"state/settings.json"}
-	SixSixFourItems := []string{".env", "docker-compose.yml", "VERSION"}
-	SixOOItems := []string{"traefik/shared/acme.json", "state/seed"}
+	// Define expected permissions
+	expectedPermissions := map[string]os.FileMode{
+		"state":                    0777,
+		"data":                     0777,
+		"apps":                     0777,
+		"logs":                     0777,
+		"traefik":                  0777,
+		"repos":                    0777,
+		"user-config":              0777,
+		"state/settings.json":      0666,
+		".env":                     0664,
+		"docker-compose.yml":       0664,
+		"VERSION":                  0664,
+		"traefik/shared/acme.json": 0600,
+		"state/seed":               0600,
+	}
+
+	// Create some blank test files
+	blankFiles := []string{
+		"state/settings.json",
+		".env",
+		"traefik/shared/acme.json",
+		"state/seed",
+		"docker-compose.yml",
+		"VERSION",
+	}
+
+	// Make sure traefik shared dir exists
+	os.Mkdir(path.Join(rootFolder, "traefik/shared"), 0777)
+
+	// Create blank files
+	for _, file := range blankFiles {
+		if _, fileErr := os.Stat(path.Join(rootFolder, file)); errors.Is(fileErr, os.ErrNotExist) {
+			os.WriteFile(path.Join(rootFolder, file), []byte(""), 0777)	
+		}
+	}
+
+	// Assign random permissions to these files
+	for _, file := range blankFiles {
+		os.Chmod(path.Join(rootFolder, file), 0777)
+	}
 
 	// Ensure file permissions
 	system.EnsureFilePermissions()
 
 	// Check file permissions
-	items, itemsErr := os.ReadDir(rootFolder)
-
-	if itemsErr != nil {
-		t.Fatalf("Failed to get files and folder in cwd, error: %s\n", itemsErr)
-	}
-
-	for _, item := range items {
-		info, err := os.Stat(path.Join(rootFolder, item.Name()))
+	for item, expectedMode := range expectedPermissions {
+		info, err := os.Stat(path.Join(rootFolder, item))
 		if err != nil {
-			t.Fatalf("Failed to get info for file %s, error: %s\n", item.Name(), err)
+			t.Fatalf("Failed to get info for file %s, error: %s\n", item, err)
 		}
-		mode := info.Mode().Perm()
-		if slices.Contains(SevenSevenSevenItems, item.Name()) {
-			if mode != os.FileMode(0777) {
-				t.Fatalf("File/folder %s didn't get correct 777 permissions\n", item.Name())
-			}
-		} else if slices.Contains(SixSixSixItems, item.Name()) {
-			if mode != os.FileMode(0666) {
-				t.Fatalf("File/folder %s didn't get correct 666 permissions\n", item.Name())
-			}
-		} else if slices.Contains(SixSixFourItems, item.Name()) {
-			if mode != os.FileMode(0664) {
-				t.Fatalf("File/folder %s didn't get correct 664 permissions\n", item.Name())
-			}
-		} else if slices.Contains(SixOOItems, item.Name()) {
-			if mode != os.FileMode(0600) {
-				t.Fatalf("File/folder %s didn't get correct 600 permissions\n", item.Name())
-			}
+		if info.Mode().Perm() != expectedMode {
+			t.Fatalf("File/folder %s didn't get correct permissions, expected %v, got %v\n", item, expectedMode, info.Mode().Perm())
 		}
 	}
 }
@@ -281,8 +255,8 @@ func TestCopy(t *testing.T) {
 	destFilePath := path.Join(rootFolder, "cpDest.txt")
 
 	// Delete old files
-	os.Remove(srcFilePath)
-	os.Remove(destFilePath)
+	os.RemoveAll(srcFilePath)
+	os.RemoveAll(destFilePath)
 
 	// Create src file
 	writeErr := os.WriteFile(srcFilePath, []byte("test"), 0644)
