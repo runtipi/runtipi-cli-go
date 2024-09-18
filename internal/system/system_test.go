@@ -185,20 +185,11 @@ func TestEnsureFilePermissions(t *testing.T) {
 	system.CopySystemFiles()
 
 	// Define expected permissions
-	expectedPermissions := map[string]os.FileMode{
-		"state":                    0777,
-		"data":                     0777,
-		"apps":                     0777,
-		"logs":                     0777,
-		"traefik":                  0777,
-		"repos":                    0777,
-		"user-config":              0777,
-		"state/settings.json":      0666,
-		".env":                     0664,
-		"docker-compose.yml":       0664,
-		"VERSION":                  0664,
-		"traefik/shared/acme.json": 0600,
-		"state/seed":               0600,
+	expectedPermissions := map[os.FileMode][]string{
+		0777: {"state", "data", "apps", "logs", "traefik", "repos", "user-config"},
+		0666: {"state/settings.json"},
+		0664: {".env", "docker-compose.yml", "VERSION"},
+		0600: {"traefik/shared/acme.json", "state/seed"},
 	}
 
 	// Create some blank test files
@@ -230,13 +221,15 @@ func TestEnsureFilePermissions(t *testing.T) {
 	system.EnsureFilePermissions()
 
 	// Check file permissions
-	for item, expectedMode := range expectedPermissions {
-		info, err := os.Stat(path.Join(rootFolder, item))
-		if err != nil {
-			t.Fatalf("Failed to get info for file %s, error: %s\n", item, err)
-		}
-		if info.Mode().Perm() != expectedMode {
-			t.Fatalf("File/folder %s didn't get correct permissions, expected %v, got %v\n", item, expectedMode, info.Mode().Perm())
+	for permission, items := range expectedPermissions {
+		for _, item := range items {
+			info, err := os.Stat(path.Join(rootFolder, item))
+			if err != nil {
+				t.Fatalf("Failed to get info for file %s, error: %s\n", item, err)
+			}
+			if info.Mode().Perm() != permission {
+				t.Fatalf("File/folder %s didn't get correct permissions, expected %v, got %v\n", item, permission, info.Mode().Perm())
+			}
 		}
 	}
 }
