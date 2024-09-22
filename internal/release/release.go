@@ -14,27 +14,23 @@ import (
 	"runtipi-cli-go/internal/system"
 )
 
-func IsMajorBump(newVersion string, currentVersion string) (bool, error) {
-	newVersionMajor := strings.Split(strings.Replace(newVersion, "v", "", 1), ".")[0]
-	currentVersionMajor := strings.Split(strings.Replace(currentVersion, "v", "", 1), ".")[0]
-
-	newVersionMajorInt, newVersionMajorIntErr := strconv.ParseInt(newVersionMajor, 10, 64)
-
-	if newVersionMajorIntErr != nil {
-		return false, newVersionMajorIntErr
+func IsMajorBump(newVersion, currentVersion string) (bool, error) {
+	parseMajor := func(version string) (int64, error) {
+		majorStr := strings.Split(strings.TrimPrefix(version, "v"), ".")[0]
+		return strconv.ParseInt(majorStr, 10, 64)
 	}
 
-	currentVersionMajorInt, currentVersionMajorIntErr := strconv.ParseInt(currentVersionMajor, 10, 64)
-
-	if currentVersionMajorIntErr != nil {
-		return false, currentVersionMajorIntErr
+	newVersionMajor, err := parseMajor(newVersion)
+	if err != nil {
+		return false, err
 	}
 
-	if newVersionMajorInt > currentVersionMajorInt {
-		return true, nil
+	currentVersionMajor, err := parseMajor(currentVersion)
+	if err != nil {
+		return false, err
 	}
 
-	return false, nil
+	return newVersionMajor > currentVersionMajor, nil
 }
 
 func GetLatestVersion() (string, error) {
