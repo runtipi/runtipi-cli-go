@@ -38,7 +38,7 @@ func Execute() {
 
 
 func init() {
-	fmt.Println("Welcome to Runtipi CLI in Go ✨")
+	fmt.Print("Welcome to Runtipi CLI in Go ✨\n\n")
 	rootCmd.AddCommand(app.AppCmd())
 	rootCmd.AddCommand(system.SystemCmd())
 }

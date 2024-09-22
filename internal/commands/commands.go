@@ -130,6 +130,8 @@ func Start(envFile string, noPermissions bool) {
 	// Finish
 	spinner.Stop()
 
+	fmt.Println()
+
 	internalIp, _ := env.GetEnvValue("INTERNAL_IP")
 	nginxPort, _ := env.GetEnvValue("NGINX_PORT")
 
