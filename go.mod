@@ -13,7 +13,7 @@ require (
 	github.com/shirou/gopsutil/v4 v4.24.8
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
-	go.step.sm/crypto v0.52.0
+	go.step.sm/crypto v0.54.0
 )
 
 require (
