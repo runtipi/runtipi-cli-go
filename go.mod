@@ -3,7 +3,7 @@ module runtipi-cli-go
 go 1.22.5
 
 require (
-	github.com/Delta456/box-cli-maker v1.3.2
+	github.com/Delta456/box-cli-maker/v2 v2.3.0
 	github.com/Delta456/box-cli-maker/v2 v2.3.0
 	github.com/aquasecurity/table v1.8.0
 	github.com/briandowns/spinner v1.23.1
