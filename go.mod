@@ -7,7 +7,7 @@ require (
 	github.com/Delta456/box-cli-maker/v2 v2.3.0
 	github.com/aquasecurity/table v1.8.0
 	github.com/briandowns/spinner v1.23.1
-	github.com/fatih/color v1.17.0
+	github.com/fatih/color v1.18.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/ivanpirog/coloredcobra v1.0.1
 	github.com/shirou/gopsutil/v4 v4.24.8
